@@ -1,0 +1,11 @@
+MQSim
+MQSim.exe
+MQSim.pdb
+build/
+x64/
+Microsoft/
+
+# Per-user Visual Studio settings
+*.vcxproj.user
+*.suo
+*.user
