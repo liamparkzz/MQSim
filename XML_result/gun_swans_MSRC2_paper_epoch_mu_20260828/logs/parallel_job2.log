@@ -1,0 +1,21 @@
+[BATCH] 1 trace(s), bundle=C:\Users\kevin\OneDrive\¹®¼­\ChatGPT\MQsim\XML_result\gun_swans_MSRC2_paper_epoch_mu_20260828
+[1/1] START src1_0.csv (2,077,380,082 bytes)
+[HEARTBEAT] simulate src1_0.csv: 20s elapsed
+[HEARTBEAT] simulate src1_0.csv: 40s elapsed
+[HEARTBEAT] simulate src1_0.csv: 60s elapsed
+[HEARTBEAT] simulate src1_0.csv: 80s elapsed
+[HEARTBEAT] simulate src1_0.csv: 100s elapsed
+[HEARTBEAT] simulate src1_0.csv: 120s elapsed
+[HEARTBEAT] simulate src1_0.csv: 140s elapsed
+[HEARTBEAT] simulate src1_0.csv: 160s elapsed
+[HEARTBEAT] simulate src1_0.csv: 180s elapsed
+[HEARTBEAT] simulate src1_0.csv: 200s elapsed
+[HEARTBEAT] simulate src1_0.csv: 220s elapsed
+[HEARTBEAT] simulate src1_0.csv: 240s elapsed
+[HEARTBEAT] simulate src1_0.csv: 260s elapsed
+[HEARTBEAT] simulate src1_0.csv: 280s elapsed
+[HEARTBEAT] simulate src1_0.csv: 300s elapsed
+[HEARTBEAT] simulate src1_0.csv: 320s elapsed
+[HEARTBEAT] simulate src1_0.csv: 340s elapsed
+[1/1] FAILED src1_0.csv: RuntimeError: MQSim failed with exit code 1
+[BATCH] finished: completed=3, failed=1

@@ -1,0 +1,24 @@
+MQSim started at Fri Aug 28 23:23:37 2026
+
+******************************
+Executing scenario 1 out of 1 .......
+Investigating input trace file: proj_1.trace
+Trace file: proj_1.trace seems healthy
+[>                   ]  0% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[=>                  ]  5% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[==>                 ]  10% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[===>                ]  15% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[====>               ]  20% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[=====>              ]  25% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[======>             ]  30% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[=======>            ]  35% progress in Host.IO_Flow.Trace.proj_1.trace
+
+[========>           ]  40% progress in Host.IO_Flow.Trace.proj_1.trace
+

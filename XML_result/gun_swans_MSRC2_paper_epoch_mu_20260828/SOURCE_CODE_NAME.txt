@@ -1,0 +1,5 @@
+Primary source: gun_swans
+Latest build-only revision: gun_swans_v1_3_gc_candidate_fallback
+Latest revision used in an attempted run: gun_swans_v1_2_gcwl_barrier_guard
+Revision used by all completed result XML files: gun_swans_v1_epochlog
+Per-trace source identity: manifest/trace_manifest.csv and workbook Summary/Trace Manifest sheets

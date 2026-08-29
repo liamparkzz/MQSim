@@ -1,0 +1,14 @@
+MQSim started at Fri Aug 28 23:22:15 2026
+
+******************************
+Executing scenario 1 out of 1 .......
+Investigating input trace file: usr_2.trace
+Trace file: usr_2.trace seems healthy
+[>                   ]  0% progress in Host.IO_Flow.Trace.usr_2.trace
+
+[=>                  ]  5% progress in Host.IO_Flow.Trace.usr_2.trace
+
+[==>                 ]  10% progress in Host.IO_Flow.Trace.usr_2.trace
+
+[===>                ]  15% progress in Host.IO_Flow.Trace.usr_2.trace
+

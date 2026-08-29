@@ -1,0 +1,56 @@
+MQSim started at Fri Aug 28 19:11:46 2026
+
+******************************
+Executing scenario 1 out of 1 .......
+Investigating input trace file: prn0_prxy0_compact.trace
+Trace file: prn0_prxy0_compact.trace seems healthy
+[>                   ]  0% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=>                  ]  5% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[==>                 ]  10% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[===>                ]  15% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[====>               ]  20% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=====>              ]  25% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[======>             ]  30% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=======>            ]  35% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[========>           ]  40% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=========>          ]  45% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[==========>         ]  50% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[===========>        ]  55% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[============>       ]  60% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=============>      ]  65% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[==============>     ]  70% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[===============>    ]  75% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[================>   ]  80% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[=================>  ]  85% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[==================> ]  90% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[===================>]  95% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+[====================]  100% progress in Host.IO_Flow.Trace.prn0_prxy0_compact.trace
+
+MQSim finished at Fri Aug 28 19:16:10 2026
+
+Total simulation time: 0:4:24
+
+Writing results to output file .......
+Flow Host.IO_Flow.Trace.prn0_prxy0_compact.trace - total requests generated: 18104854 total requests serviced:18104854
+                   - device response time: 1585 (us) end-to-end request delay:1585 (us)
+Simulation complete; Press any key to exit.

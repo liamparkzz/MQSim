@@ -1,0 +1,46 @@
+{
+  "batch_started_at": "2026-08-28T19:57:02+09:00",
+  "runs": {
+    "proj_1.csv": {
+      "status": "FAILED",
+      "source_csv": "C:\\Users\\kevin\\OneDrive\\문서\\ChatGPT\\MQsim\\Trace\\MSRC_2\\proj_1.csv",
+      "source_size_bytes": 1305533029,
+      "time_acceleration": 1,
+      "address_mode": "GLOBAL_LBA",
+      "started_at": "2026-08-28T22:38:49+09:00",
+      "completed_at": "2026-08-28T23:21:30+09:00",
+      "error": "RuntimeError: MQSim failed with exit code 4294967295",
+      "source_sha256": "a6961cdc5380ba5567972aa60ee18487cc89067dfd120bebefb6912feb6e815e",
+      "convert_elapsed_seconds": 72.485,
+      "converted_rows": 23639742,
+      "source_rows_scanned": 23639742,
+      "source_requests": 23639742,
+      "conversion_status": "COMPLETED",
+      "source_revision": "gun_swans_v1_1_gcwl_fix",
+      "executable_sha256": "042846c21e77361733c88d206df54ff9dfee3aa08cc564fa0148b51ec94198fb",
+      "simulation_elapsed_seconds": 2560.563
+    },
+    "usr_2.csv": {
+      "status": "FAILED",
+      "source_revision": "gun_swans_v1_1_gcwl_fix",
+      "executable_sha256": "042846c21e77361733c88d206df54ff9dfee3aa08cc564fa0148b51ec94198fb",
+      "source_csv": "C:\\Users\\kevin\\OneDrive\\문서\\ChatGPT\\MQsim\\Trace\\MSRC_2\\usr_2.csv",
+      "source_size_bytes": 574047026,
+      "time_acceleration": 1,
+      "address_mode": "GLOBAL_LBA",
+      "started_at": "2026-08-28T23:21:30+09:00",
+      "completed_at": "2026-08-28T23:23:17+09:00",
+      "error": "RuntimeError: MQSim failed with exit code 4294967295",
+      "source_sha256": "cb53f1788a48f8775db35fec11d7b97768ea13e2ee8dbf9b435bbf9096d2b0aa",
+      "convert_elapsed_seconds": 44.765,
+      "converted_rows": 10570046,
+      "source_rows_scanned": 10570046,
+      "source_requests": 10570046,
+      "conversion_status": "COMPLETED",
+      "simulation_elapsed_seconds": 61.984
+    }
+  },
+  "batch_last_finished_at": "2026-08-28T23:23:17+09:00",
+  "completed_count": 0,
+  "failed_count": 2
+}

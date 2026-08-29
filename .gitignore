@@ -9,3 +9,23 @@ Microsoft/
 *.vcxproj.user
 *.suo
 *.user
+
+# Original MSRC corpus is about 30 GB and remains local.
+Trace/
+
+# Temporary/incomplete simulation scratch data. Final results remain tracked.
+tmp/
+XML_result/**/work/
+
+# Local dependency junctions and editor state.
+**/node_modules/
+**/.obsidian/
+
+# Interrupted spreadsheet rendering previews.
+XML_result/**/previews/
+
+# Common transient files.
+*.tmp
+*.log.tmp
+Thumbs.db
+Desktop.ini
