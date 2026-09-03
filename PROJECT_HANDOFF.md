@@ -28,7 +28,6 @@
 3. GC/WL 정책 변형을 설정으로 선택할 수 있게 설계한다.
 4. SSD 스펙과 workload 시나리오 matrix를 고정하고 데스크탑에서 실험한다.
 5. 성능, tail latency, GC 대기, WAF와 erase-count 편차를 함께 분석한다.
-6. 바탕화면의 `C:\Users\kevin\Desktop\MQSim` 복제본은 새 경로 사용을 확인한 뒤 필요할 때 수동 정리한다.
 
 ## 작업 기록
 
@@ -91,7 +90,23 @@
 - 실행/테스트 결과: PowerShell 구문 검사와 `git diff --check` 통과; 예약 작업 `LastTaskResult=0`; 로컬 HEAD와 `origin/main`이 `b9b2c58`로 일치
 - 시뮬레이션 상태: 새로 시작한 실행 없음
 - 결과 저장 위치: 저장소 `C:\CODEX\MQsim`; 자동 동기화 로그 `C:\CODEX\MQsim\.git\auto-sync.log`
-- 결정 사항: `main`만 5분마다 자동 동기화하고 충돌 시 rebase를 중단해 수동 확인; 바탕화면 복제본은 자동 삭제하지 않음
+- 결정 사항: `main`만 5분마다 자동 동기화하고 충돌 시 rebase를 중단해 수동 확인; 바탕화면 복제본은 사용자가 삭제함
 - 미해결 문제: 예약 작업은 현재 Codex 번들 Git 절대 경로를 사용하므로 런타임 위치가 바뀌면 설치 스크립트를 다시 실행해야 함; Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
-- 다음 작업: GC/WL 호출 경로와 정책 코드 분석 시작; 새 경로가 안정적인지 확인한 뒤 바탕화면 복제본 정리 여부 결정
+- 다음 작업: `C:\CODEX\MQsim`에서 GC/WL 호출 경로와 정책 코드 분석 시작
 - 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`; `Get-ScheduledTaskInfo -TaskName 'MQSim Git Auto Sync'`; `Get-Content C:\CODEX\MQsim\.git\auto-sync.log -Tail 20`
+
+### 2026-09-03 13:56 바탕화면 복제본 정리
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: MQSim `main`
+- Git 커밋: 작업 전 기준 `25cf520`; 이 기록은 자동 동기화 커밋으로 반영
+- 작업 목적: MQSim 작업 경로를 `C:\CODEX\MQsim` 하나로 정리
+- 완료한 내용: 사용자가 `C:\Users\kevin\Desktop\MQSim` 복제본을 삭제했고 해당 경로가 존재하지 않음을 확인
+- 변경한 주요 파일: `PROJECT_HANDOFF.md`, Obsidian `Operations/다중 기기 작업 정책.md`
+- 실행/테스트 결과: `Test-Path C:\Users\kevin\Desktop\MQSim` 결과 `False`; 기준 저장소 상태 `main...origin/main`
+- 시뮬레이션 상태: 새로 시작한 실행 없음
+- 결과 저장 위치: 공식 MQSim 작업 경로 `C:\CODEX\MQsim`
+- 결정 사항: 앞으로 노트북의 MQSim 코드 작업은 `C:\CODEX\MQsim`에서만 수행
+- 미해결 문제: Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
+- 다음 작업: `C:\CODEX\MQsim`에서 GC/WL 호출 경로와 정책 코드 분석 시작
+- 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`
