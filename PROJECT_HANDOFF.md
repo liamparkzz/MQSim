@@ -132,7 +132,7 @@
 
 - 작업 기기: 노트북 환경
 - Git 브랜치: MQSim 원격 `main`; 로컬 상태는 Codex 실행 계층 `setup refresh` 오류로 확인 불가
-- Git 커밋: 분석 기준 MQSim `11aa98afde2a070155ca97c4a82b4482110f1b72`; Obsidian 분석 노트 `0e8bb48d1c50e1af501afb2491db9b9a9faca16a`; 이 인계 기록 커밋은 반영 후 확인
+- Git 커밋: 분석 기준 MQSim `11aa98afde2a070155ca97c4a82b4482110f1b72`; 인계 기록 최초 반영 `2a8303e2e85182ff45902624859b25f922913605`; Obsidian 분석 노트 최초 반영 `0e8bb48d1c50e1af501afb2491db9b9a9faca16a`
 - 작업 목적: GC 실행 중 victim block 또는 같은 flash chip으로 들어오는 User Read/Write의 차단·대기·스케줄링 구조 규명
 - 완료한 내용: GC victim 예약, `Has_ongoing_gc_wl`, 진행 중 User I/O 카운터, LPA/MVPN barrier, TSU User/GC 분리 큐, erase/program suspend, erase dependency 흐름을 추적하고 Obsidian에 정리
 - 변경한 주요 파일: 코드 변경 없음; `PROJECT_HANDOFF.md`, Obsidian `GC lock 코드 분석.md`, 연구 계획, Experiment Dashboard
