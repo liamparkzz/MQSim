@@ -4,6 +4,8 @@ This repository is managed from `C:\CODEX\MQsim`.
 
 The Windows scheduled task `MQSim Git Auto Sync` runs every five minutes while
 the user is signed in. Each run:
+The task uses `wscript.exe` as a hidden launcher, so no terminal window appears.
+
 
 1. stages working-tree changes;
 2. skips secret-looking files and new files larger than 50 MB;

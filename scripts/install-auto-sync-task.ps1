@@ -11,18 +11,22 @@ if ($IntervalMinutes -lt 1) {
 }
 
 $syncScript = Join-Path $PSScriptRoot 'mqsim-auto-sync.ps1'
+$hiddenLauncher = Join-Path $PSScriptRoot 'run-auto-sync-hidden.vbs'
 if (-not (Test-Path -LiteralPath $syncScript -PathType Leaf)) {
     throw "Auto-sync script not found: $syncScript"
 }
+if (-not (Test-Path -LiteralPath $hiddenLauncher -PathType Leaf)) {
+    throw "Hidden launcher not found: $hiddenLauncher"
+}
 
-$powerShellPath = Join-Path $PSHOME 'powershell.exe'
-if (-not (Test-Path -LiteralPath $powerShellPath -PathType Leaf)) {
-    $powerShellPath = (Get-Command powershell.exe -ErrorAction Stop).Source
+$wscriptPath = Join-Path $env:SystemRoot 'System32\wscript.exe'
+if (-not (Test-Path -LiteralPath $wscriptPath -PathType Leaf)) {
+    throw "Windows Script Host not found: $wscriptPath"
 }
 
 $gitExecutable = (Get-Command git.exe -ErrorAction Stop).Source
-$actionArguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "{0}" -GitExecutable "{1}"' -f $syncScript, $gitExecutable
-$action = New-ScheduledTaskAction -Execute $powerShellPath -Argument $actionArguments
+$actionArguments = '"{0}" "{1}"' -f $hiddenLauncher, $gitExecutable
+$action = New-ScheduledTaskAction -Execute $wscriptPath -Argument $actionArguments
 $trigger = New-ScheduledTaskTrigger `
     -Once `
     -At (Get-Date).AddMinutes(1) `
@@ -43,7 +47,7 @@ Register-ScheduledTask `
     -Trigger $trigger `
     -Settings $settings `
     -Principal $principal `
-    -Description 'Commit, rebase, and push MQSim changes to origin/main every few minutes.' `
+    -Description 'Silently commit, rebase, and push MQSim changes to origin/main every few minutes.' `
     -Force | Out-Null
 
 Get-ScheduledTask -TaskName $TaskName | Select-Object TaskName, State
