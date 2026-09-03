@@ -110,3 +110,19 @@
 - 미해결 문제: Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
 - 다음 작업: `C:\CODEX\MQsim`에서 GC/WL 호출 경로와 정책 코드 분석 시작
 - 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`
+
+### 2026-09-03 15:49 자동 동기화 창 숨김 처리
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: MQSim `main`
+- Git 커밋: `3eb4006` (`auto-sync: 2026-09-03 15:48:43 [LAPTOP-ASUSZENB]`)
+- 작업 목적: 5분마다 나타나던 PowerShell 터미널 창을 없애고 숨김 자동 push 유지
+- 완료한 내용: `wscript.exe` 숨김 실행기 추가, 예약 작업 재활성화, 인증 팝업 금지, 원격과 같을 때 불필요한 push 생략, HTTP 무진행 30초 및 전체 실행 4분 제한 적용
+- 변경한 주요 파일: `AUTO_SYNC.md`, `scripts/run-auto-sync-hidden.vbs`, `scripts/install-auto-sync-task.ps1`, `scripts/mqsim-auto-sync.ps1`, `PROJECT_HANDOFF.md`
+- 실행/테스트 결과: 숨김 실행기 자동 commit/push 종료 코드 `0`; 예약 작업 `Ready`·`Enabled=True`·실행 파일 `wscript.exe`·`LastTaskResult=0`; 잔존 동기화 프로세스 없음
+- 시뮬레이션 상태: 새로 시작한 실행 없음
+- 결과 저장 위치: 저장소 `C:\CODEX\MQsim`; 로그 `C:\CODEX\MQsim\.git\auto-sync.log`
+- 결정 사항: 5분 간격 자동 동기화는 창 없는 WScript 래퍼로 실행하고 실패·충돌은 로그로 확인
+- 미해결 문제: Codex 번들 Git 경로가 바뀌면 설치 스크립트 재실행 필요; Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
+- 다음 작업: `C:\CODEX\MQsim`에서 GC/WL 호출 경로와 정책 코드 분석 시작
+- 재개 명령 또는 참고사항: `Get-ScheduledTaskInfo -TaskName 'MQSim Git Auto Sync'`; `Get-Content C:\CODEX\MQsim\.git\auto-sync.log -Tail 20`
