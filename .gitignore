@@ -9,3 +9,17 @@ Microsoft/
 *.vcxproj.user
 *.suo
 *.user
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+credentials.*
+secrets.*
+
+# Local automation state
+*.lock

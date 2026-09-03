@@ -1,0 +1,82 @@
+# Project Handoff
+
+이 문서는 데스크탑과 노트북 사이의 작업 인계 기록이며, Obsidian 프로젝트 노트에 직접 접근할 수 없을 때 사용하는 저장소 내 보조 기록이다.
+
+## 동기화 설정
+
+- GitHub 저장소: `https://github.com/liamparkzz/MQSim.git`
+- 기본 브랜치: `main`
+- Obsidian Vault: `C:\Users\kevin\Obsidian\LiamObsidian`
+- Obsidian 홈: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\MQSim Home.md`
+- 실험 대시보드: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\Experiments\Experiment Dashboard.md`
+- Obsidian 작업 정책: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\Operations\다중 기기 작업 정책.md`
+- Obsidian Git 저장소: `https://github.com/liamparkzz/LiamObsidian.git` (`main`)
+- 마지막 확인: 2026-09-03 (Asia/Seoul)
+
+## 현재 상태
+
+- 작업 기기: 확인 불가
+- Git 상태: `C:\CODEX\MQsim`이 현재 Git 저장소로 인식되지 않음
+- Obsidian 상태: 혼합형 폴더 구조 적용 및 GitHub `main` 자동 push 완료 (`2a94c71`)
+- 실행 중인 시뮬레이션: 확인된 항목 없음
+- 미동기화 항목: MQSim 작업 폴더의 `AGENTS.md`, `PROJECT_HANDOFF.md` — 현재 폴더가 Git 저장소가 아니므로 로컬에만 존재
+
+## 다음 작업
+
+1. 실제 MQSim 저장소 경로와 분석 대상 commit을 확인한다.
+2. host write부터 GC 완료까지 호출 경로를 추적해 lock·상태 기반 배제·transaction dependency와 blocking 범위를 정리한다.
+3. 현재 GC/WL 발동 조건, victim 선택, migration, erase와 스케줄링 정책을 코드 근거로 정리한다.
+4. GC/WL 정책 변형을 설정으로 선택할 수 있게 설계한다.
+5. SSD 스펙과 workload 시나리오 matrix를 고정하고 데스크탑에서 실험한다.
+6. 성능, tail latency, GC 대기, WAF와 erase-count 편차를 함께 분석한다.
+7. `C:\CODEX\MQsim`을 실제 Git 저장소에 연결한 뒤 `AGENTS.md`와 `PROJECT_HANDOFF.md`를 원격 반영한다.
+
+## 작업 기록
+
+### 2026-09-03 정책 설정
+
+- 작업 기기: 확인 불가
+- Git 브랜치: 없음 또는 확인 불가
+- Git 커밋: Obsidian `45c0047` (`Add multi-device workflow policy`)
+- 작업 목적: 데스크탑과 노트북 간 연속 작업 정책 설정
+- 완료한 내용: 다중 기기 작업, GitHub/Obsidian 동기화, 시뮬레이션 기록 및 충돌 처리 정책 작성
+- 변경한 주요 파일: `AGENTS.md`, `PROJECT_HANDOFF.md`
+- 실행/테스트 결과: 문서 생성 및 Obsidian GitHub `main` 원격 반영 확인
+- 시뮬레이션 상태: 확인된 실행 없음
+- 결과 저장 위치: `C:\CODEX\MQsim`
+- 결정 사항: GitHub는 코드 기준, Obsidian은 작업 맥락 기준으로 사용하고 커밋 해시로 연결
+- 미해결 문제: 현재 `C:\CODEX\MQsim`이 Git 저장소가 아니므로 MQSim GitHub 반영 불가
+- 다음 작업: 실제 MQSim 저장소를 이 경로에 clone/연결한 뒤 `AGENTS.md`와 `PROJECT_HANDOFF.md` 최초 동기화
+- 재개 명령 또는 참고사항: 작업 시작 시 `git status`와 Obsidian 최신 기록부터 확인
+
+### 2026-09-03 다음 과제 등록
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: Obsidian `main`; MQSim 분석 대상 commit 미확인
+- Git 커밋: Obsidian `f459156` (`Plan MQSim GC and wear-leveling experiments`)
+- 작업 목적: MQSim write 시 GC lock 처리와 wear-leveling/GC 정책을 규명하고 정책·SSD 스펙별 시나리오 실험 수행
+- 완료한 내용: 과제 범위를 코드 분석, 정책 변형, 시나리오 실험과 결과 분석 단계로 구조화
+- 변경한 주요 파일: `PROJECT_HANDOFF.md`, Obsidian 연구 허브·실험 계획·신규 과제 노트
+- 실행/테스트 결과: 아직 코드 분석 및 시뮬레이션을 시작하지 않음
+- 시뮬레이션 상태: 예정
+- 결과 저장 위치: 추후 Run ID별 경로 확정 필요
+- 결정 사항: lock 이름 검색에 한정하지 않고 상태 기반 배제와 event-driven 직렬화까지 분석하며, 실험에서는 한 번에 한 변수만 변경
+- 미해결 문제: 실제 MQSim 저장소 경로와 기준 commit 확인 필요
+- 다음 작업: write/GC/WL 관련 파일·클래스·함수 목록 생성
+- 재개 명령 또는 참고사항: 저장소 확인 후 `git status`, `git rev-parse HEAD`, 관련 심볼 검색부터 시작
+
+### 2026-09-03 Obsidian 구조 개편
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: Obsidian `main`
+- Git 커밋: Obsidian `2a94c71` (`vault backup: 2026-09-03 12:59:29`)
+- 작업 목적: 날짜·번호 나열식 노트를 MQSim 기능 뼈대와 연구 흐름이 보이는 혼합형 구조로 개편
+- 완료한 내용: `MQSim Home`, 영역별 Map, 실험 Dashboard, Active/Completed 과제 폴더와 실험 Template 구성
+- 변경한 주요 파일: Obsidian `MQSim SSD 연구` 아래 기존 노트 10개 이동·이름 변경 및 지도/템플릿 10개 추가
+- 실행/테스트 결과: 기존 번호 위키링크 0개, 중복 노트명 0개, MQSim 영역 내 해석되지 않는 위키링크 0개
+- 시뮬레이션 상태: 새로 시작한 실행 없음
+- 결과 저장 위치: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구`
+- 결정 사항: 영어 카테고리 폴더와 한글 중심 노트명을 사용하고 새 과제는 `Experiments/Active/<주제명>`으로 관리
+- 미해결 문제: 사용자가 실제 구조를 사용해 본 뒤 폴더명, 언어와 세분화 정도에 대한 취향 피드백 필요
+- 다음 작업: `MQSim Home`과 `Experiment Dashboard`를 검토하고 선호에 따라 2차 조정
+- 재개 명령 또는 참고사항: 구조 조정 시 파일 삭제 대신 Git 이동을 사용하고 전체 위키링크를 다시 검사
