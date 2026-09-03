@@ -126,3 +126,20 @@
 - 미해결 문제: Codex 번들 Git 경로가 바뀌면 설치 스크립트 재실행 필요; Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
 - 다음 작업: `C:\CODEX\MQsim`에서 GC/WL 호출 경로와 정책 코드 분석 시작
 - 재개 명령 또는 참고사항: `Get-ScheduledTaskInfo -TaskName 'MQSim Git Auto Sync'`; `Get-Content C:\CODEX\MQsim\.git\auto-sync.log -Tail 20`
+
+
+### 2026-09-03 15:52 GC lock 및 User I/O 경합 경로 분석
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: MQSim 원격 `main`; 로컬 상태는 Codex 실행 계층 `setup refresh` 오류로 확인 불가
+- Git 커밋: 분석 기준 MQSim `11aa98afde2a070155ca97c4a82b4482110f1b72`; Obsidian 분석 노트 `0e8bb48d1c50e1af501afb2491db9b9a9faca16a`; 이 인계 기록 커밋은 반영 후 확인
+- 작업 목적: GC 실행 중 victim block 또는 같은 flash chip으로 들어오는 User Read/Write의 차단·대기·스케줄링 구조 규명
+- 완료한 내용: GC victim 예약, `Has_ongoing_gc_wl`, 진행 중 User I/O 카운터, LPA/MVPN barrier, TSU User/GC 분리 큐, erase/program suspend, erase dependency 흐름을 추적하고 Obsidian에 정리
+- 변경한 주요 파일: 코드 변경 없음; `PROJECT_HANDOFF.md`, Obsidian `GC lock 코드 분석.md`, 연구 계획, Experiment Dashboard
+- 실행/테스트 결과: 비공개 GitHub `main` 정적 분석 완료; 로컬 명령 실행 및 시뮬레이션은 `helper_unknown_error: setup refresh had errors`로 수행하지 못함
+- 시뮬레이션 상태: 새로 시작한 실행 없음; 기존 실행 여부는 로컬에서 독립 확인하지 못함
+- 결과 저장 위치: `PROJECT_HANDOFF.md`; Obsidian `Experiments/Active/GC Lock과 Wear Leveling/GC lock 코드 분석.md`
+- 결정 사항: GC lock은 flash 전체 mutex가 아니라 victim block의 valid LPA/MVPN barrier와 block별 GC 상태·User I/O 카운터의 조합이며, 다른 block I/O는 TSU 우선순위와 suspend 정책에 따라 계속 처리됨
+- 미해결 문제: (1) 기존 User I/O 완료 후 지연 시작되는 GC 경로에서 `gc_wl_erase_tr`을 TSU에 제출하지 않아 erase 및 GC 상태 해제가 누락될 가능성, (2) LPA barrier 해제 시 대기 User I/O를 Address Mapping handler에 직접 전달한 뒤 삭제하지만 해당 handler가 non-MAPPING source를 즉시 반환하여 요청이 replay·완료 처리되지 않을 가능성, (3) 로컬 HEAD와 미커밋 변경 확인 필요
+- 다음 작업: 두 경합 경로의 최소 재현 trace와 회귀 테스트를 만든 뒤 erase transaction 제출 및 barrier 대기 User I/O replay/completion 경로 수정
+- 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`; `rg -n "Set_barrier_for_accessing_physical_block|Remove_barrier_for_accessing_lpa|Can_execute_gc_wl|gc_wl_erase_tr" src/ssd`
