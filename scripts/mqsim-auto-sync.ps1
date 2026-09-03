@@ -9,6 +9,8 @@ $ErrorActionPreference = 'Stop'
 $env:GIT_TERMINAL_PROMPT = '0'
 $env:GCM_INTERACTIVE = 'Never'
 
+$env:GIT_HTTP_LOW_SPEED_LIMIT = '1'
+$env:GIT_HTTP_LOW_SPEED_TIME = '30'
 
 if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
     $RepositoryRoot = Split-Path -Parent $PSScriptRoot
