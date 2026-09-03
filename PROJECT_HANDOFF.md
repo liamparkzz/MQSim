@@ -143,3 +143,20 @@
 - 미해결 문제: (1) 기존 User I/O 완료 후 지연 시작되는 GC 경로에서 `gc_wl_erase_tr`을 TSU에 제출하지 않아 erase 및 GC 상태 해제가 누락될 가능성, (2) LPA barrier 해제 시 대기 User I/O를 Address Mapping handler에 직접 전달한 뒤 삭제하지만 해당 handler가 non-MAPPING source를 즉시 반환하여 요청이 replay·완료 처리되지 않을 가능성, (3) 로컬 HEAD와 미커밋 변경 확인 필요
 - 다음 작업: 두 경합 경로의 최소 재현 trace와 회귀 테스트를 만든 뒤 erase transaction 제출 및 barrier 대기 User I/O replay/completion 경로 수정
 - 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`; `rg -n "Set_barrier_for_accessing_physical_block|Remove_barrier_for_accessing_lpa|Can_execute_gc_wl|gc_wl_erase_tr" src/ssd`
+
+
+### 2026-09-03 16:21 Obsidian 자동 pull 미실행 진단 및 수동 복구
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: MQSim `main`; Obsidian `main`
+- Git 커밋: 진단 전 MQSim `377b892`; Obsidian 원격 `f2ab2f0`; 이 기록 커밋은 반영 후 확인
+- 작업 목적: Obsidian Git의 5분 auto-pull이 원격 GC lock 분석 노트를 로컬 Vault에 반영하지 않은 원인 확인
+- 완료한 내용: MQSim 예약 작업은 MQSim 저장소만 대상으로 정상 실행됨을 확인. Obsidian Git 설정은 auto-pull 5분이지만 Custom Git binary path가 비어 있고 사용자·시스템 PATH에도 Git이 없어 일반 실행된 Obsidian에서 Git 자동 루틴이 동작하지 않은 것으로 진단. 원격 변경과 로컬 수정이 겹치지 않음을 확인하고 Obsidian 저장소를 `f2ab2f0`까지 fast-forward
+- 변경한 주요 파일: 코드 변경 없음; `PROJECT_HANDOFF.md`, Obsidian `Operations/다중 기기 작업 정책.md`
+- 실행/테스트 결과: Obsidian 로컬 HEAD `f2ab2f0`, `main...origin/main`; `GC lock 코드 분석.md` 존재 확인; 기존 로컬 수정 2개 보존
+- 시뮬레이션 상태: 새로 시작한 실행 없음
+- 결과 저장 위치: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\Experiments\Active\GC Lock과 Wear Leveling\GC lock 코드 분석.md`
+- 결정 사항: 현재 5분 Windows 예약 작업은 MQSim 전용이며 Obsidian 동기화는 플러그인의 Git 실행 경로가 정상일 때만 동작
+- 미해결 문제: Obsidian Git Custom Git binary path 설정 및 재시작 후 실제 5분 auto-pull 재검증 필요; Codex 번들 Git 경로 변경 가능성
+- 다음 작업: Obsidian Git 경로 설정 후 검증용 원격 변경을 만들고 5분 이내 자동 pull 여부 확인
+- 재개 명령 또는 참고사항: Obsidian 설정 → Community plugins → Git → Custom Git binary path
