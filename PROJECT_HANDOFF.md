@@ -15,21 +15,20 @@
 
 ## 현재 상태
 
-- 작업 기기: 확인 불가
-- Git 상태: `C:\CODEX\MQsim`이 현재 Git 저장소로 인식되지 않음
-- Obsidian 상태: 혼합형 폴더 구조 적용 및 GitHub `main` 자동 push 완료 (`2a94c71`)
+- 작업 기기: 노트북 환경
+- Git 상태: `C:\CODEX\MQsim`을 MQSim Git 저장소 `main`으로 연결하고 5분 간격 자동 commit/rebase/push 예약 작업 검증 완료 (`b9b2c58`)
+- Obsidian 상태: 자동 동기화 설정 기록을 GitHub `main`에 반영 완료 (`9a1f6e2`); 별도의 사용자 수정은 보존
 - 실행 중인 시뮬레이션: 확인된 항목 없음
-- 미동기화 항목: MQSim 작업 폴더의 `AGENTS.md`, `PROJECT_HANDOFF.md` — 현재 폴더가 Git 저장소가 아니므로 로컬에만 존재
+- 미동기화 항목: Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정 1건 — 이번 작업에 포함하지 않고 보존
 
 ## 다음 작업
 
-1. 실제 MQSim 저장소 경로와 분석 대상 commit을 확인한다.
-2. host write부터 GC 완료까지 호출 경로를 추적해 lock·상태 기반 배제·transaction dependency와 blocking 범위를 정리한다.
-3. 현재 GC/WL 발동 조건, victim 선택, migration, erase와 스케줄링 정책을 코드 근거로 정리한다.
-4. GC/WL 정책 변형을 설정으로 선택할 수 있게 설계한다.
-5. SSD 스펙과 workload 시나리오 matrix를 고정하고 데스크탑에서 실험한다.
-6. 성능, tail latency, GC 대기, WAF와 erase-count 편차를 함께 분석한다.
-7. `C:\CODEX\MQsim`을 실제 Git 저장소에 연결한 뒤 `AGENTS.md`와 `PROJECT_HANDOFF.md`를 원격 반영한다.
+1. `C:\CODEX\MQsim`의 기준 commit `b9b2c58`에서 host write부터 GC 완료까지 호출 경로를 추적해 lock·상태 기반 배제·transaction dependency와 blocking 범위를 정리한다.
+2. 현재 GC/WL 발동 조건, victim 선택, migration, erase와 스케줄링 정책을 코드 근거로 정리한다.
+3. GC/WL 정책 변형을 설정으로 선택할 수 있게 설계한다.
+4. SSD 스펙과 workload 시나리오 matrix를 고정하고 데스크탑에서 실험한다.
+5. 성능, tail latency, GC 대기, WAF와 erase-count 편차를 함께 분석한다.
+6. 바탕화면의 `C:\Users\kevin\Desktop\MQSim` 복제본은 새 경로 사용을 확인한 뒤 필요할 때 수동 정리한다.
 
 ## 작업 기록
 
@@ -80,3 +79,19 @@
 - 미해결 문제: 사용자가 실제 구조를 사용해 본 뒤 폴더명, 언어와 세분화 정도에 대한 취향 피드백 필요
 - 다음 작업: `MQSim Home`과 `Experiment Dashboard`를 검토하고 선호에 따라 2차 조정
 - 재개 명령 또는 참고사항: 구조 조정 시 파일 삭제 대신 Git 이동을 사용하고 전체 위키링크를 다시 검사
+
+### 2026-09-03 MQSim 작업 경로 및 자동 동기화 설정
+
+- 작업 기기: 노트북 환경
+- Git 브랜치: MQSim `main`
+- Git 커밋: `b9b2c58` (`auto-sync: 2026-09-03 13:46:05 [LAPTOP-ASUSZENB]`)
+- 작업 목적: MQSim 코드를 `C:\CODEX\MQsim`에서 관리하고 변경사항을 GitHub에 자동 반영
+- 완료한 내용: 원격 `main` 연결, 기존 정책 문서 보존·커밋, 5분 간격 Windows 예약 작업 `MQSim Git Auto Sync` 등록, 자동 commit/fetch/rebase/push 및 충돌·비밀정보·50MB 초과 파일 보호 구성
+- 변경한 주요 파일: `.gitignore`, `AGENTS.md`, `AUTO_SYNC.md`, `PROJECT_HANDOFF.md`, `scripts/install-auto-sync-task.ps1`, `scripts/mqsim-auto-sync.ps1`
+- 실행/테스트 결과: PowerShell 구문 검사와 `git diff --check` 통과; 예약 작업 `LastTaskResult=0`; 로컬 HEAD와 `origin/main`이 `b9b2c58`로 일치
+- 시뮬레이션 상태: 새로 시작한 실행 없음
+- 결과 저장 위치: 저장소 `C:\CODEX\MQsim`; 자동 동기화 로그 `C:\CODEX\MQsim\.git\auto-sync.log`
+- 결정 사항: `main`만 5분마다 자동 동기화하고 충돌 시 rebase를 중단해 수동 확인; 바탕화면 복제본은 자동 삭제하지 않음
+- 미해결 문제: 예약 작업은 현재 Codex 번들 Git 절대 경로를 사용하므로 런타임 위치가 바뀌면 설치 스크립트를 다시 실행해야 함; Obsidian `Core/MQSim 구조와 핵심 개념.md`의 기존 사용자 수정은 별도 확인 필요
+- 다음 작업: GC/WL 호출 경로와 정책 코드 분석 시작; 새 경로가 안정적인지 확인한 뒤 바탕화면 복제본 정리 여부 결정
+- 재개 명령 또는 참고사항: `git -C C:\CODEX\MQsim status --short --branch`; `Get-ScheduledTaskInfo -TaskName 'MQSim Git Auto Sync'`; `Get-Content C:\CODEX\MQsim\.git\auto-sync.log -Tail 20`
