@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$RepositoryRoot,
+    [string]$GitExecutable,
     [int64]$MaximumAutomaticFileSize = 50MB
 )
 
@@ -10,6 +11,22 @@ if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
     $RepositoryRoot = Split-Path -Parent $PSScriptRoot
 }
 
+if ([string]::IsNullOrWhiteSpace($GitExecutable)) {
+    $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue
+    if ($null -eq $gitCommand) {
+        $gitCandidates = @(
+            (Join-Path $env:ProgramFiles 'Git\cmd\git.exe'),
+            (Join-Path $env:LOCALAPPDATA 'Programs\Git\cmd\git.exe')
+        )
+        $GitExecutable = $gitCandidates | Where-Object {
+            Test-Path -LiteralPath $_ -PathType Leaf
+        } | Select-Object -First 1
+    } else {
+        $GitExecutable = $gitCommand.Source
+    }
+}
+
+$resolvedGitExecutable = (Resolve-Path -LiteralPath $GitExecutable -ErrorAction Stop).Path
 $repository = (Resolve-Path -LiteralPath $RepositoryRoot).Path
 $safeRepository = $repository.Replace('\', '/')
 $gitDirectory = Join-Path $repository '.git'
@@ -34,7 +51,7 @@ function Invoke-RepositoryGit {
     $previousErrorActionPreference = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
-        $output = @(& git -c "safe.directory=$safeRepository" -C $repository @Arguments 2>&1)
+        $output = @(& $resolvedGitExecutable -c "safe.directory=$safeRepository" -C $repository @Arguments 2>&1)
         $exitCode = $LASTEXITCODE
     } finally {
         $ErrorActionPreference = $previousErrorActionPreference

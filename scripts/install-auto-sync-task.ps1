@@ -20,7 +20,8 @@ if (-not (Test-Path -LiteralPath $powerShellPath -PathType Leaf)) {
     $powerShellPath = (Get-Command powershell.exe -ErrorAction Stop).Source
 }
 
-$actionArguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "{0}"' -f $syncScript
+$gitExecutable = (Get-Command git.exe -ErrorAction Stop).Source
+$actionArguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "{0}" -GitExecutable "{1}"' -f $syncScript, $gitExecutable
 $action = New-ScheduledTaskAction -Execute $powerShellPath -Argument $actionArguments
 $trigger = New-ScheduledTaskTrigger `
     -Once `
