@@ -35,7 +35,7 @@ $trigger = New-ScheduledTaskTrigger `
 $settings = New-ScheduledTaskSettingsSet `
     -StartWhenAvailable `
     -MultipleInstances IgnoreNew `
-    -ExecutionTimeLimit (New-TimeSpan -Minutes ([Math]::Max(2, $IntervalMinutes)))
+    -ExecutionTimeLimit (New-TimeSpan -Minutes 2)
 $principal = New-ScheduledTaskPrincipal `
     -UserId ("{0}\{1}" -f $env:USERDOMAIN, $env:USERNAME) `
     -LogonType Interactive `

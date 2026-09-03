@@ -6,6 +6,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$env:GIT_TERMINAL_PROMPT = '0'
+$env:GCM_INTERACTIVE = 'Never'
+
 
 if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
     $RepositoryRoot = Split-Path -Parent $PSScriptRoot
@@ -130,6 +133,13 @@ try {
         Invoke-RepositoryGit -Arguments @('rebase', '--abort') -AllowFailure | Out-Null
         Write-AutoSyncLog 'Stopped: remote changes conflict with local commits. Rebase was aborted; manual resolution is required.'
         exit 1
+    }
+
+    $aheadResult = Invoke-RepositoryGit -Arguments @('rev-list', '--count', 'origin/main..HEAD')
+    $aheadCount = [int](($aheadResult.Output | Select-Object -First 1).ToString().Trim())
+    if ($aheadCount -eq 0) {
+        Write-AutoSyncLog 'Synchronization completed; no local commits required a push.'
+        exit 0
     }
 
     $pushResult = Invoke-RepositoryGit -Arguments @('push', 'origin', 'main') -AllowFailure
