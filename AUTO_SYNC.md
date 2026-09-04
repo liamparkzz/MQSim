@@ -1,6 +1,18 @@
 # MQSim Git automatic synchronization
 
-This repository is managed from `C:\CODEX\MQsim`.
+Desktop checkout: `D:\D_Drive_Codex\MQsimDT`.
+Laptop checkout: `C:\CODEX\MQsim`.
+
+On the desktop, `D:\D_Drive_Codex\.sync\install-sync-tasks.ps1` installs
+`MQSim Git Auto Sync` and `Obsidian Git Auto Sync`. They run silently every
+five minutes while signed in, and at sign-in. Obsidian does not need to be open.
+The desktop worker commits local changes, fetches, merges without rewriting
+history, and pushes `main`. A conflict aborts the merge and preserves local
+commits. Each repository records results in `.git\auto-sync.log`.
+Obsidian Git's automatic timers are disabled on this desktop to avoid overlap.
+Previously copied experiment data remain local through `.git\info\exclude`.
+
+The following bundled-script instructions describe the laptop setup.
 
 The Windows scheduled task `MQSim Git Auto Sync` runs every five minutes while
 the user is signed in. Each run:

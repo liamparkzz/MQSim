@@ -1,5 +1,12 @@
 # 데스크탑·노트북 연속 작업 정책
 
+## 현재 사용자 지침 (2026-09-05, 아래 일반 정책보다 우선)
+
+- 원본 MQSim의 루트 `src/`와 원본 설정만 연구 기준으로 삼는다. `Source/` 및 과거 수정본 기록을 현재 기준으로 재사용하지 않는다.
+- 데스크탑 코드: `D:/D_Drive_Codex/MQsimDT`; Vault: `D:/D_Drive_Codex/ObsidianDT/LiamObsidian`. 이전 경로를 자동 대체 경로로 사용하지 않는다.
+- 노트북 코드 경로 `C:/CODEX/MQsim`은 별도 기기의 경로이다. 기기별 실제 경로를 먼저 확인한다.
+- Obsidian 노트는 사용자가 작성·수정을 요청할 때만 필요한 사실·결정·실행 항목을 간결히 기록한다. 아래 일반 정책의 자동 기록·장문 템플릿 요구보다 이 지침을 우선한다. 기존 노트의 구조·링크·속성을 보존한다.
+- 데스크탑 자동 동기화는 `D:/D_Drive_Codex/.sync`의 Windows 예약 작업이 각 저장소의 `main`만 5분마다 처리한다. 이전 실험 자료는 로컬에 보존하며 main 자동 업로드에서 제외한다.
 ## 목적과 적용 범위
 
 이 프로젝트는 데스크탑과 노트북에서 번갈아 작업한다. 대규모·장시간 시뮬레이션은 원칙적으로 데스크탑에서 실행하고, 코드 수정, 문서화, 결과 확인, 소규모 검증은 두 기기 모두에서 수행할 수 있다.
@@ -15,11 +22,11 @@
 
 고정 동기화 위치:
 
-- Obsidian Vault: `C:\Users\kevin\Obsidian\LiamObsidian`
-- MQSim 노트 폴더: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구`
-- MQSim 홈: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\MQSim Home.md`
-- 실험 대시보드: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\Experiments\Experiment Dashboard.md`
-- 다중 기기 정책 노트: `C:\Users\kevin\Obsidian\LiamObsidian\MQSim SSD 연구\Operations\다중 기기 작업 정책.md`
+- Obsidian Vault: `D:\D_Drive_Codex\ObsidianDT\LiamObsidian`
+- MQSim 노트 폴더: `D:\D_Drive_Codex\ObsidianDT\LiamObsidian\MQSim SSD 연구`
+- MQSim 홈: `D:\D_Drive_Codex\ObsidianDT\LiamObsidian\MQSim SSD 연구\MQSim Home.md`
+- 실험 대시보드: `D:\D_Drive_Codex\ObsidianDT\LiamObsidian\MQSim SSD 연구\Experiments\Experiment Dashboard.md`
+- 다중 기기 정책 노트: `D:\D_Drive_Codex\ObsidianDT\LiamObsidian\MQSim SSD 연구\Operations\다중 기기 작업 정책.md`
 - Obsidian Git 원격: `https://github.com/liamparkzz/LiamObsidian.git`
 - MQSim Git 원격: `https://github.com/liamparkzz/MQSim.git`
 
