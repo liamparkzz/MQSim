@@ -160,3 +160,12 @@
 - 미해결 문제: Obsidian Git Custom Git binary path 설정 및 재시작 후 실제 5분 auto-pull 재검증 필요; Codex 번들 Git 경로 변경 가능성
 - 다음 작업: Obsidian Git 경로 설정 후 검증용 원격 변경을 만들고 5분 이내 자동 pull 여부 확인
 - 재개 명령 또는 참고사항: Obsidian 설정 → Community plugins → Git → Custom Git binary path
+
+
+### 2026-09-08 원본 이슈 003 검증
+
+- 원본 src/ 수정 없음. 공식 원본 149개 파일 일치 및 실행 전후 무변경 확인.
+- LPA barrier 해제에서 USERIO 읽기 4건·쓰기 7건의 완료 누락과 삭제 포인터 잔존 직접 관측. 2,000건 중 1,936건 완료; 나머지 미완료 원인은 별도 미확정.
+- 상태: 정적·동적 검증 완료 / 미수정. 7개 실행 모두 종료.
+- 재현 코드: analysis/issue003-validation/. 상세 결과: D:/D_Drive_Codex/MQsimExperiments/20260908-issue003-barrier/RESULTS.md.
+- 현재 Vault의 Issues/검증완료/003 노트 및 코드 문제점 목록 갱신. 후속 수정 시 정상 완료·목록 정리와 요청 보존을 검증한다.
