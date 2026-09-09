@@ -1,5 +1,11 @@
 # MQSim Git automatic synchronization
 
+On the laptop, each run also calls `scripts/export-obsidian-code.ps1` before
+network synchronization and after rebasing. This updates the Obsidian source
+mirror and diffs. Export failures are logged without stopping Git synchronization.
+For an immediate snapshot with a reason, run that script with `-Reason`.
+The separate desktop worker is not yet connected to this exporter.
+
 Desktop checkout: `D:\D_Drive_Codex\MQsimDT`.
 Laptop checkout: `C:\CODEX\MQsim`.
 

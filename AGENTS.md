@@ -1,5 +1,12 @@
 # 데스크탑·노트북 연속 작업 정책
 
+## 원본 코드 기록 요청 (2026-09-09)
+
+- 사용자가 Obsidian에 MQSim 원본 전체 코드와 이후 변경 이력 게시를 요청했다. 아래 전체 코드 복사 금지 규칙보다 이 요청이 우선한다. PR79 수정본은 기준으로 사용하지 않는다.
+- 원본 기준은 공식 `51f0f2d3fed92d88ef4a0fa61a38024b07bf9d16`. Vault `MQSim SSD 연구/Code/Baseline/`을 보존한다.
+- 의미 있는 코드 수정마다 `scripts/export-obsidian-code.ps1 -Vault <실제 Vault 경로> -Reason <변경 이유>`를 실행하고 검증 결과는 해당 이슈 노트에 기록한다. `Current/`·`History/`·누적 diff가 갱신되는지 확인한다.
+- 현재 확인한 노트북은 `C:/CODEX/MQsim`, Vault는 `C:/CODEX/Obsidian/LiamObsidian`. 기존 노트북 5분 동기화 스크립트에 자동 내보내기를 연결했다. 데스크탑은 별도 연결이 필요하다.
+
 ## 현재 사용자 지침 (2026-09-05, 아래 일반 정책보다 우선)
 
 - 원본 MQSim의 루트 `src/`와 원본 설정만 연구 기준으로 삼는다. `Source/` 및 과거 수정본 기록을 현재 기준으로 재사용하지 않는다.

@@ -82,6 +82,11 @@ try {
         exit 0
     }
 
+    # Record local source changes even when the subsequent network sync fails.
+    try {
+        & (Join-Path $PSScriptRoot 'export-obsidian-code.ps1') -GitExecutable $resolvedGitExecutable | Out-Null
+    } catch { Write-AutoSyncLog "Source export failed: $($_.Exception.Message)" }
+
     $branchResult = Invoke-RepositoryGit -Arguments @('rev-parse', '--abbrev-ref', 'HEAD')
     $branch = ($branchResult.Output | Select-Object -First 1).ToString().Trim()
     if ($branch -ne 'main') {
@@ -138,6 +143,10 @@ try {
     }
 
     $aheadResult = Invoke-RepositoryGit -Arguments @('rev-list', '--count', 'origin/main..HEAD')
+    # Include source commits and updates received from the other device.
+    try {
+        & (Join-Path $PSScriptRoot 'export-obsidian-code.ps1') -GitExecutable $resolvedGitExecutable | Out-Null
+    } catch { Write-AutoSyncLog "Source export failed: $($_.Exception.Message)" }
     $aheadCount = [int](($aheadResult.Output | Select-Object -First 1).ToString().Trim())
     if ($aheadCount -eq 0) {
         Write-AutoSyncLog 'Synchronization completed; no local commits required a push.'
