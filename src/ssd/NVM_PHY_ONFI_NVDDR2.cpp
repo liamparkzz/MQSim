@@ -19,7 +19,7 @@ namespace SSD_Components {
 		for (unsigned int channelID = 0; channelID < channel_count; channelID++) {
 			bookKeepingTable[channelID] = new ChipBookKeepingEntry[chip_no_per_channel];
 			for (unsigned int chipID = 0; chipID < chip_no_per_channel; chipID++) {
-				bookKeepingTable[channelID][chipID].Expected_command_exec_finish_time = T0; 
+				bookKeepingTable[channelID][chipID].Expected_command_exec_finish_time = T0;
 				bookKeepingTable[channelID][chipID].Last_transfer_finish_time = T0;
 				bookKeepingTable[channelID][chipID].Die_book_keeping_records = new DieBookKeepingEntry[DieNoPerChip];
 				bookKeepingTable[channelID][chipID].Status = ChipStatus::IDLE;
@@ -40,6 +40,23 @@ namespace SSD_Components {
 			}
 		}
 		_my_instance = this;
+	}
+
+	NVM_PHY_ONFI_NVDDR2::~NVM_PHY_ONFI_NVDDR2(){
+		for (unsigned int channelID = 0; channelID < channel_count; channelID++) {
+			for(unsigned int chipID = 0; chipID < chip_no_per_channel; chipID++) {
+				delete[] bookKeepingTable[channelID][chipID].Die_book_keeping_records;
+			}
+			delete[] bookKeepingTable[channelID];
+			for(auto& e : WaitingCopybackWrites[channelID]){
+				delete e;
+			}
+		}
+		delete[] bookKeepingTable;
+		delete[] WaitingReadTX;
+		delete[] WaitingGCRead_TX;
+		delete[] WaitingMappingRead_TX;
+		delete[] WaitingCopybackWrites;
 	}
 
 	void NVM_PHY_ONFI_NVDDR2::Setup_triggers()
@@ -70,7 +87,7 @@ namespace SSD_Components {
 		return channels[channelID]->Chips[chipID];
 	}
 
-	LPA_type NVM_PHY_ONFI_NVDDR2::Get_metadata(flash_channel_ID_type channe_id, flash_chip_ID_type chip_id, flash_die_ID_type die_id, flash_plane_ID_type plane_id, flash_block_ID_type block_id, flash_page_ID_type page_id)//A simplification to decrease the complexity of GC execution! The GC unit may need to know the metadata of a page to decide if a page is valid or invalid. 
+	LPA_type NVM_PHY_ONFI_NVDDR2::Get_metadata(flash_channel_ID_type channe_id, flash_chip_ID_type chip_id, flash_die_ID_type die_id, flash_plane_ID_type plane_id, flash_block_ID_type block_id, flash_page_ID_type page_id)//A simplification to decrease the complexity of GC execution! The GC unit may need to know the metadata of a page to decide if a page is valid or invalid.
 	{
 		return channels[channe_id]->Chips[chip_id]->Get_metadata(die_id, plane_id, block_id, page_id);
 	}
@@ -84,7 +101,7 @@ namespace SSD_Components {
 	{
 		return bookKeepingTable[chip->ChannelID][chip->ChipID].Status;
 	}
-	
+
 	inline sim_time_type NVM_PHY_ONFI_NVDDR2::Expected_finish_time(NVM::FlashMemory::Flash_Chip* chip)
 	{
 		return bookKeepingTable[chip->ChannelID][chip->ChipID].Expected_command_exec_finish_time;
@@ -127,7 +144,7 @@ namespace SSD_Components {
 	{
 		channels[page_address.ChannelID]->Chips[page_address.ChipID]->Change_memory_status_preconditioning(&page_address, &lpa);
 	}
-	
+
 	void NVM_PHY_ONFI_NVDDR2::Send_command_to_chip(std::list<NVM_Transaction_Flash*>& transaction_list)
 	{
 		ONFI_Channel_NVDDR2* target_channel = channels[transaction_list.front()->Address.ChannelID];
@@ -561,7 +578,7 @@ namespace SSD_Components {
 					+ chip->Get_command_execution_latency(dieBKE->ActiveCommand->CommandCode, dieBKE->ActiveCommand->Address[0].PageID);
 				if (chipBKE->Expected_command_exec_finish_time < dieBKE->Expected_finish_time)
 					chipBKE->Expected_command_exec_finish_time = dieBKE->Expected_finish_time;
-#if 0	
+#if 0
 				//Copyback data should be read out in order to get rid of bit error propagation
 				Simulator->RegisterEvent(Simulator->Time() + channels[targetChip->ChannelID]->ProgramCommandTime + NVDDR2DataOutTransferTime(targetTransaction->SizeInByte, channels[targetChip->ChannelID]),
 					this, targetTransaction, (int)NVDDR2_SimEventType::READ_DATA_TRANSFERRED);

@@ -23,3 +23,5 @@ secrets.*
 
 # Local automation state
 *.lock
+.vscode
+traces

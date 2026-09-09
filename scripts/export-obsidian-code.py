@@ -125,7 +125,7 @@ def main():
         links.append(f'| `{path}` | [[MQSim SSD 연구/Code/Current/{path}.md\u007c현재 코드]] | [[MQSim SSD 연구/Code/Baseline/{path}.md\u007c원본]] |' if path in baseline else f'| `{path}` | [[MQSim SSD 연구/Code/Current/{path}.md\u007c현재 코드]] | 신규 파일 |')
     # Escape wikilink display separators inside Markdown tables.
     links = [line.replace('\u007c현재', '\\|현재').replace('\u007c원본', '\\|원본') for line in links]
-    write(root / 'MQSim 전체 코드.md', '# MQSim 전체 코드\n\n공식 MQSim 원본을 기준으로 보존합니다. PR79 수정본이 아닙니다.\n\n'
+    write(root / 'MQSim 전체 코드.md', '# MQSim 전체 코드\n\nBaseline에는 공식 MQSim 원본을 보존하고, Current에는 GitHub 백업의 최신 코드를 게시합니다.\n\n'
           f'- 공식 원본 커밋: `{baseline_ref}`\n- 현재 소스 파일: {sum(p.startswith("src/") for p in current)}개 · 설정/빌드/문서 포함 {len(current)}개\n'
           f'- GitHub 백업 확인 커밋: [{head[:12]}](https://github.com/liamparkzz/MQSim/commit/{head})\n'
           '- Baseline: 변경하지 않는 원본 전문. Current: GitHub origin/main에서 확인한 코드 전문. 미커밋/미전송 편집은 포함하지 않습니다.\n'

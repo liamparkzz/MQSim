@@ -28,7 +28,7 @@ namespace SSD_Components
 	};
 	enum class CMT_Sharing_Mode { SHARED, EQUAL_SIZE_PARTITIONING };
 
-	enum class Moving_LPA_Status { GC_IS_READING_PHYSICAL_BLOCK, GC_IS_READING_DATA, GC_IS_WRITING_DATA, 
+	enum class Moving_LPA_Status { GC_IS_READING_PHYSICAL_BLOCK, GC_IS_READING_DATA, GC_IS_WRITING_DATA,
 		GC_IS_READING_PHYSICAL_BLOCK_AND_THERE_IS_USER_READ, GC_IS_READING_DATA_AND_THERE_IS_USER_READ,
 	    GC_IS_READING_PHYSICAL_BLOCK_AND_PAGE_IS_INVALIDATED, GC_IS_READING_DATA_AND_PAGE_IS_INVALIDATED, GC_IS_WRITING_DATA_AND_PAGE_IS_INVALIDATED};
 
@@ -47,7 +47,7 @@ namespace SSD_Components
 		virtual int Bring_to_CMT_for_preconditioning(stream_id_type stream_id, LPA_type lpa) = 0;//Used for warming up the cached mapping table during preconditioning
 		virtual void Store_mapping_table_on_flash_at_start() = 0; //It should only be invoked at the begenning of the simulation to store mapping table entries on the flash space
 
-		
+
 		virtual unsigned int Get_cmt_capacity() = 0;//Returns the maximum number of entries that could be stored in the cached mapping table
 		virtual unsigned int Get_current_cmt_occupancy_for_stream(stream_id_type stream_id) = 0;
 		virtual LPA_type Get_logical_pages_count(stream_id_type stream_id) = 0; //Returns the number of logical pages allocated to an I/O stream
@@ -79,7 +79,15 @@ namespace SSD_Components
 		virtual void Remove_barrier_for_accessing_lpa(const stream_id_type stream_id, const LPA_type lpa) = 0; //Removes the barrier that has already been set for accessing an LPA (i.e., the GC_and_WL_Unit_Base unit successfully finished relocating LPA from one physical location to another physical location).
 		virtual void Remove_barrier_for_accessing_mvpn(const stream_id_type stream_id, const MVPN_type mvpn) = 0; //Removes the barrier that has already been set for accessing an MVPN (i.e., the GC_and_WL_Unit_Base unit successfully finished relocating MVPN from one physical location to another physical location).
 		virtual void Start_servicing_writes_for_overfull_plane(const NVM::FlashMemory::Physical_Page_Address plane_address) = 0;//This function is invoked when GC execution is finished on a plane and the plane has enough number of free pages to service writes
+		typedef void(*TransactionServicedSignalHandlerType) (NVM_Transaction_Flash*);
+
+		void Connect_to_user_request_arrived_signal(TransactionServicedSignalHandlerType function)
+		{
+			connected_transaction_serviced_signal_handler = function;
+		}
 	protected:
+
+		void ConnectDCMServiedTransactionHandler(void(*dcmServicedTransactionHandler)(NVM_Transaction_Flash*));
 		FTL* ftl;
 		NVM_PHY_ONFI* flash_controller;
 		Flash_Block_Manager_Base* block_manager;
@@ -105,6 +113,8 @@ namespace SSD_Components
 		double overprovisioning_ratio;
 		bool fold_large_addresses;
 		bool mapping_table_stored_on_flash;
+
+		TransactionServicedSignalHandlerType connected_transaction_serviced_signal_handler;
 
 		virtual bool query_cmt(NVM_Transaction_Flash* transaction) = 0;
 		virtual PPA_type online_create_entry_for_reads(LPA_type lpa, const stream_id_type stream_id, NVM::FlashMemory::Physical_Page_Address& read_address, uint64_t read_sectors_bitmap) = 0;
