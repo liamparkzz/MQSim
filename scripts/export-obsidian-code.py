@@ -42,6 +42,12 @@ def main():
         return subprocess.check_output([a.git, '-c', f'safe.directory={repo.as_posix()}',
                                         '-C', str(repo), *args])
 
+    # Only publish a commit confirmed on the configured GitHub backup branch.
+    head = git('rev-parse', 'origin/main').decode().strip()
+    remote = git('ls-remote', 'origin', 'refs/heads/main').decode().split()
+    if not remote or remote[0] != head:
+        raise RuntimeError('Backup branch is not verified. Fetch/push main successfully before exporting.')
+
     def write(path, content):
         path.parent.mkdir(parents=True, exist_ok=True)
         data = content.encode('utf-8')
@@ -81,16 +87,15 @@ def main():
              'LICENSE', 'README.md']
     baseline_paths = git('ls-tree', '-r', '--name-only', '-z', baseline_ref, '--', *scope).decode().strip('\0').split('\0')
     baseline = {path: git('show', f'{baseline_ref}:{path}') for path in baseline_paths if path}
-    current_paths = git('ls-files', '--cached', '--others', '--exclude-standard', '-z', '--', *scope).decode().strip('\0').split('\0')
-    current = {path: (repo / path).read_bytes() for path in sorted(set(current_paths)) if path and (repo / path).is_file()}
-    head = git('rev-parse', 'HEAD').decode().strip()
-    branch = git('branch', '--show-current').decode().strip()
+    current_paths = git('ls-tree', '-r', '--name-only', '-z', head, '--', *scope).decode().strip('\0').split('\0')
+    current = {path: git('show', f'{head}:{path}') for path in current_paths if path}
+    branch = 'origin/main'
     stamp = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
     previous = {k: base64.b64decode(v) for k, v in state['files'].items()} if state else baseline
     delta = diff(previous, current)
     if state is None or delta:
         title = stamp + (' 최초 기준' if state is None else ' 코드 변경')
-        write(root / 'History' / (title + '.md'), f'# {title}\n\n- 기록 시각(UTC): {stamp}\n- 기기: {os.environ.get("COMPUTERNAME", "unknown")}\n- 브랜치: `{branch}`\n- HEAD: `{head}` (미커밋 변경 포함)\n- 사유: {a.reason}\n\n' + (delta or '공식 원본 기준과 전체 내용 일치.\n'))
+        write(root / 'History' / (title + '.md'), f'# {title}\n\n- 기록 시각(UTC): {stamp}\n- 기기: {os.environ.get("COMPUTERNAME", "unknown")}\n- 백업 브랜치: `{branch}`\n- GitHub 확인 커밋: `{head}`\n- 사유: {a.reason}\n- 수정 일시·이유·동작 설명: 아래 코드 차이와 해당 commit 기록 참조\n\n' + (delta or '공식 원본 기준과 전체 내용 일치.\n'))
     for path, data in baseline.items():
         target = root / 'Baseline' / (path + '.md')
         if not target.exists():
@@ -107,7 +112,11 @@ def main():
     for commit in commits:
         target = root / 'History' / ('commit-' + commit + '.md')
         if not target.exists():
-            meta = git('show', '-s', '--format=%cI%n%B', commit).decode('utf-8')
+            when = git('show', '-s', '--format=%cI', commit).decode('utf-8').strip()
+            message = git('show', '-s', '--format=%B', commit).decode('utf-8').strip()
+            files = git('diff-tree', '--no-commit-id', '--name-status', '-r', '--root', commit, '--', *scope).decode('utf-8')
+            explanation = message if ('수정 이유' in message and '변경 설명' in message) else message + '\n\n수정 이유·변경 설명: 아직 작성되지 않음. diff만으로 의도를 추정하지 않습니다.'
+            meta = f'- 수정 일시(커밋 기준): {when}\n\n## 수정 이유 및 변경 설명\n\n{explanation}\n\n## 변경 파일\n\n' + fence(files)
             patch = git('show', '--format=', '--first-parent', commit, '--', *scope).decode('utf-8')
             write(target, f'# Git 변경 {commit[:12]}\n\n{meta}\n[GitHub 커밋](https://github.com/liamparkzz/MQSim/commit/{commit})\n\n' + fence(patch, 'diff'))
     write(root / '원본 대비 누적 변경.md', '# 원본 대비 누적 변경\n\n기준: `' + baseline_ref + '`\n\n' + (diff(baseline, current) or '원본과 동일합니다.\n'))
@@ -118,7 +127,8 @@ def main():
     links = [line.replace('\u007c현재', '\\|현재').replace('\u007c원본', '\\|원본') for line in links]
     write(root / 'MQSim 전체 코드.md', '# MQSim 전체 코드\n\n공식 MQSim 원본을 기준으로 보존합니다. PR79 수정본이 아닙니다.\n\n'
           f'- 공식 원본 커밋: `{baseline_ref}`\n- 현재 소스 파일: {sum(p.startswith("src/") for p in current)}개 · 설정/빌드/문서 포함 {len(current)}개\n'
-          '- Baseline: 변경하지 않는 원본 전문. Current: 로컬 작업 코드 전문. 노트는 자동 생성되므로 코드는 저장소에서 수정합니다.\n'
+          f'- GitHub 백업 확인 커밋: [{head[:12]}](https://github.com/liamparkzz/MQSim/commit/{head})\n'
+          '- Baseline: 변경하지 않는 원본 전문. Current: GitHub origin/main에서 확인한 코드 전문. 미커밋/미전송 편집은 포함하지 않습니다.\n'
           '- [[MQSim 코드 변경 이력]] · [[원본 대비 누적 변경]] · [[코드 기록 사용법]]\n'
           '- 전체 src(내장 라이브러리 포함), 루트 빌드 파일·XML·README·LICENSE 포함. 실험 trace·논문·실행 산출물은 제외.\n\n'
           '| 파일 | 현재 | 최초 원본 |\n|---|---|---|\n' + '\n'.join(links) + '\n')
@@ -127,7 +137,7 @@ def main():
           '`-` 삭제 전 / `+` 추가 후. `@@ -이전줄,개수 +새줄,개수 @@`는 변경 줄 위치입니다.\n'
           '시각별 기록은 직전 기록과의 차이, commit 기록은 Git 커밋별 차이입니다. 같은 변경이 양쪽에 나타날 수 있습니다.\n\n'
           + '\n'.join(f'- [[MQSim SSD 연구/Code/History/{f.stem}]]' for f in histories) + '\n')
-    write(state_path, json.dumps({'baseline_ref': baseline_ref, 'start_head': start,
+    write(state_path, json.dumps({'baseline_ref': baseline_ref, 'start_head': start, 'published_head': head,
                                  'files': {k: base64.b64encode(v).decode() for k, v in current.items()}}, ensure_ascii=False, indent=2) + '\n')
     print(f'Export OK: {len(current)} files; changed={previous != current}; {root}')
     handle.close()

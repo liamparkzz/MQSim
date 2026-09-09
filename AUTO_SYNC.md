@@ -1,8 +1,9 @@
 # MQSim Git automatic synchronization
 
-On the laptop, each run also calls `scripts/export-obsidian-code.ps1` before
-network synchronization and after rebasing. This updates the Obsidian source
-mirror and diffs. Export failures are logged without stopping Git synchronization.
+On the laptop, each run calls `scripts/export-obsidian-code.ps1` only after
+successful Git synchronization. It verifies origin/main against the remote and
+exports that committed tree, excluding unpublished local edits. Commit bodies
+provide the reason, behavior explanation, and validation for Obsidian history.
 For an immediate snapshot with a reason, run that script with `-Reason`.
 The separate desktop worker is not yet connected to this exporter.
 

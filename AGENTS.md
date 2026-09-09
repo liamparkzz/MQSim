@@ -4,7 +4,9 @@
 
 - 사용자가 Obsidian에 MQSim 원본 전체 코드와 이후 변경 이력 게시를 요청했다. 아래 전체 코드 복사 금지 규칙보다 이 요청이 우선한다. PR79 수정본은 기준으로 사용하지 않는다.
 - 원본 기준은 공식 `51f0f2d3fed92d88ef4a0fa61a38024b07bf9d16`. Vault `MQSim SSD 연구/Code/Baseline/`을 보존한다.
-- 의미 있는 코드 수정마다 `scripts/export-obsidian-code.ps1 -Vault <실제 Vault 경로> -Reason <변경 이유>`를 실행하고 검증 결과는 해당 이슈 노트에 기록한다. `Current/`·`History/`·누적 diff가 갱신되는지 확인한다.
+- 사용자 명확화(2026-09-09): 코드의 기준은 사용자 GitHub 백업 main이며, Obsidian에는 수정 일시·수정 이유·변경 코드의 동작 설명을 남긴다.
+- 의미 있는 코드 수정마다 검증 후 커밋 본문에 `수정 이유:`, `변경 설명:`, `검증:`, `관련 이슈:`를 구체적으로 작성한다. GitHub push와 main 해시 일치를 확인한 다음 `scripts/export-obsidian-code.ps1 -Vault <실제 Vault 경로>`를 실행한다. 이 설명 기록과 백업 일치를 작업 완료 기준으로 삼는다.
+- 자동 커밋 등으로 설명이 빠졌다면 해당 Obsidian commit 이력 노트에 직접 설명을 보완한다. 의도를 diff만 보고 추측하지 않는다. Current에는 백업 확인 커밋만 게시한다.
 - 현재 확인한 노트북은 `C:/CODEX/MQsim`, Vault는 `C:/CODEX/Obsidian/LiamObsidian`. 기존 노트북 5분 동기화 스크립트에 자동 내보내기를 연결했다. 데스크탑은 별도 연결이 필요하다.
 
 ## 현재 사용자 지침 (2026-09-05, 아래 일반 정책보다 우선)
