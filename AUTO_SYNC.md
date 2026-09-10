@@ -22,7 +22,9 @@ Previously copied experiment data remain local through `.git\info\exclude`.
 The following bundled-script instructions describe the laptop setup.
 
 The Windows scheduled task `MQSim Git Auto Sync` runs every five minutes while
-the user is signed in. Each run:
+the user is signed in, on AC or battery power. Switching to battery does not stop
+an active synchronization. The laptop must be awake and have network access.
+Each run:
 The task uses `wscript.exe` as a hidden launcher, so no terminal window appears.
 
 Credential prompts are disabled during scheduled runs, and any run that exceeds
