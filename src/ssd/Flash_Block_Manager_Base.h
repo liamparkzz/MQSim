@@ -43,6 +43,7 @@ namespace SSD_Components
 		bool Hot_block = false;//Used for hot/cold separation mentioned in the "On the necessity of hot and cold data identification to reduce the write amplification in flash-based SSDs", Perf. Eval., 2014.
 		int Ongoing_user_read_count;
 		int Ongoing_user_program_count;
+		int Ongoing_gc_program_count = 0;//Protect GC/WL destinations until their page programs complete.
 		void Erase();
 	};
 

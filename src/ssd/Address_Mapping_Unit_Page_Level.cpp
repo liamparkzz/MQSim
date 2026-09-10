@@ -1227,7 +1227,7 @@ namespace SSD_Components
 			block_manager->Invalidate_page_in_block(transaction->Stream_id, prevAddr);
 		}
 
-		block_manager->Allocate_block_and_page_in_plane_for_translation_write(transaction->Stream_id, transaction->Address, false);
+		block_manager->Allocate_block_and_page_in_plane_for_translation_write(transaction->Stream_id, transaction->Address, is_for_gc);
 		transaction->PPA = Convert_address_to_ppa(transaction->Address);
 		domain->GlobalTranslationDirectory[mvpn].MPPN = (MPPN_type)transaction->PPA;
 		domain->GlobalTranslationDirectory[mvpn].TimeStamp = CurrentTimeStamp;
@@ -1818,23 +1818,22 @@ namespace SSD_Components
 		}
 		domains[stream_id]->Locked_LPAs.erase(itr);
 
-		//If there are read requests waiting behind the barrier, then MQSim assumes they can be serviced with the actual page data that is accessed during GC execution
+		//Detach waiting requests before dispatch, which may start GC and create another barrier.
+		std::list<NVM_Transaction*> waiting_transactions;
 		auto read_tr = domains[stream_id]->Read_transactions_behind_LPA_barrier.find(lpa);
 		while (read_tr != domains[stream_id]->Read_transactions_behind_LPA_barrier.end()) {
-			connected_transaction_serviced_signal_handler((*read_tr).second);
-			delete (*read_tr).second;
+			waiting_transactions.push_back(read_tr->second);
 			domains[stream_id]->Read_transactions_behind_LPA_barrier.erase(read_tr);
 			read_tr = domains[stream_id]->Read_transactions_behind_LPA_barrier.find(lpa);
 		}
 
-		//If there are write requests waiting behind the barrier, then MQSim assumes they can be serviced with the actual page data that is accessed during GC execution. This may not be 100% true for all write requests, but, to avoid more complexity in the simulation, we accept this assumption.
 		auto write_tr = domains[stream_id]->Write_transactions_behind_LPA_barrier.find(lpa);
 		while (write_tr != domains[stream_id]->Write_transactions_behind_LPA_barrier.end()) {
-			connected_transaction_serviced_signal_handler((*write_tr).second);
-			delete (*write_tr).second;
+			waiting_transactions.push_back(write_tr->second);
 			domains[stream_id]->Write_transactions_behind_LPA_barrier.erase(write_tr);
 			write_tr = domains[stream_id]->Write_transactions_behind_LPA_barrier.find(lpa);
 		}
+		Translate_lpa_to_ppa_and_dispatch(waiting_transactions);
 	}
 
 	inline void Address_Mapping_Unit_Page_Level::Remove_barrier_for_accessing_mvpn(stream_id_type stream_id, MVPN_type mvpn)
@@ -1932,20 +1931,9 @@ namespace SSD_Components
 	{
 		std::set<NVM_Transaction_Flash_WR*>& waiting_write_list = Write_transactions_for_overfull_planes[plane_address.ChannelID][plane_address.ChipID][plane_address.DieID][plane_address.PlaneID];
 
-		ftl->TSU->Prepare_for_transaction_submit();
-		auto program = waiting_write_list.begin();
-		while (program != waiting_write_list.end()) {
-			if (translate_lpa_to_ppa((*program)->Stream_id, *program)) {
-				ftl->TSU->Submit_transaction(*program);
-				if ((*program)->RelatedRead != NULL) {
-					ftl->TSU->Submit_transaction((*program)->RelatedRead);
-				}
-				waiting_write_list.erase(program++);
-			}
-			else {
-				break;
-			}
-		}
-		ftl->TSU->Schedule();
+		//Recheck LPA barriers and CMT entries after waiting for free space.
+		std::list<NVM_Transaction*> waiting_transactions(waiting_write_list.begin(), waiting_write_list.end());
+		waiting_write_list.clear();
+		Translate_lpa_to_ppa_and_dispatch(waiting_transactions);
 	}
 }

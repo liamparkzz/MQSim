@@ -43,6 +43,7 @@ namespace SSD_Components
 		plane_record->Free_pages_count--;		
 		page_address.BlockID = plane_record->GC_wf[stream_id]->BlockID;
 		page_address.PageID = plane_record->GC_wf[stream_id]->Current_page_write_index++;
+		plane_record->Blocks[page_address.BlockID].Ongoing_gc_program_count++;
 
 		
 		//The current write frontier block is written to the end
@@ -95,7 +96,11 @@ namespace SSD_Components
 		plane_record->Free_pages_count--;
 		page_address.BlockID = plane_record->Translation_wf[streamID]->BlockID;
 		page_address.PageID = plane_record->Translation_wf[streamID]->Current_page_write_index++;
-		program_transaction_issued(page_address);
+		if (is_for_gc) {
+			plane_record->Blocks[page_address.BlockID].Ongoing_gc_program_count++;
+		} else {
+			program_transaction_issued(page_address);
+		}
 
 		//The current write frontier block for translation pages is written to the end
 		if (plane_record->Translation_wf[streamID]->Current_page_write_index == pages_no_per_block) {

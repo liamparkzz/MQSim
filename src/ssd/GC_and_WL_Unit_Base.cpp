@@ -144,6 +144,7 @@ namespace SSD_Components
 				break;
 			}
 			case Transaction_Type::WRITE:
+				pbke->Blocks[transaction->Address.BlockID].Ongoing_gc_program_count--;
 				if (pbke->Blocks[((NVM_Transaction_Flash_WR*)transaction)->RelatedErase->Address.BlockID].Holds_mapping_data) {
 					_my_instance->address_mapping_unit->Remove_barrier_for_accessing_mvpn(transaction->Stream_id, (MVPN_type)transaction->LPA);
 					DEBUG(Simulator->Time() << ": MVPN=" << (MVPN_type)transaction->LPA << " unlocked!!");
@@ -239,7 +240,8 @@ namespace SSD_Components
 		}
 
 		//The block shouldn't have an ongoing program request (all pages must already be written)
-		if (plane_record->Blocks[gc_wl_candidate_block_id].Ongoing_user_program_count > 0) {
+		if (plane_record->Blocks[gc_wl_candidate_block_id].Ongoing_user_program_count > 0
+			|| plane_record->Blocks[gc_wl_candidate_block_id].Ongoing_gc_program_count > 0) {
 			return false;
 		}
 
@@ -268,7 +270,7 @@ namespace SSD_Components
 		Block_Pool_Slot_Type* block = &pbke->Blocks[wl_candidate_block_id];
 
 		//Run the state machine to protect against race condition
-		block_manager->GC_WL_started(wl_candidate_block_id);
+		block_manager->GC_WL_started(wl_candidate_address);
 		pbke->Ongoing_erase_operations.insert(wl_candidate_block_id);
 		address_mapping_unit->Set_barrier_for_accessing_physical_block(wl_candidate_address);//Lock the block, so no user request can intervene while the GC is progressing
 		if (block_manager->Can_execute_gc_wl(wl_candidate_address)) {//If there are ongoing requests targeting the candidate block, the gc execution should be postponed

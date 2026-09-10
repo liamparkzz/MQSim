@@ -58,7 +58,8 @@ namespace SSD_Components
 						gc_candidate_block_id++;
 					}
 					for (flash_block_ID_type block_id = 1; block_id < block_no_per_plane; block_id++) {
-						if (pbke->Blocks[block_id].Invalid_page_count > pbke->Blocks[gc_candidate_block_id].Invalid_page_count
+						if ((!is_safe_gc_wl_candidate(pbke, gc_candidate_block_id)
+							|| pbke->Blocks[block_id].Invalid_page_count > pbke->Blocks[gc_candidate_block_id].Invalid_page_count)
 							&& pbke->Blocks[block_id].Current_page_write_index == pages_no_per_block
 							&& is_safe_gc_wl_candidate(pbke, block_id)) {
 							gc_candidate_block_id = block_id;
@@ -131,7 +132,8 @@ namespace SSD_Components
 			}
 
 			//This should never happen, but we check it here for safty
-			if (pbke->Ongoing_erase_operations.find(gc_candidate_block_id) != pbke->Ongoing_erase_operations.end()) {
+			if (pbke->Ongoing_erase_operations.find(gc_candidate_block_id) != pbke->Ongoing_erase_operations.end()
+				|| !is_safe_gc_wl_candidate(pbke, gc_candidate_block_id)) {
 				return;
 			}
 			
