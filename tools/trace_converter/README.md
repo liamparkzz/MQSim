@@ -99,6 +99,8 @@ python mqsim_trace_converter.py convert --format cloudphysics-csv --input "cloud
 
 ## 팀 공유와 재현
 
+물리 256GiB·OP 7% 기준의 [추천 공용 설정 초안](profiles/review-256gib-op7-v1/README.md)을 검토할 수 있다. 검사용 논리 용량은 255,636,439,040B이며, 원본 선택·주소 초과 처리에 대한 미확정 항목을 포함한다.
+
 `examples/batch.example.json`을 복사해 실제 경로와 실험에서 합의한 옵션을 채운다. 상대 경로는 **JSON 파일 위치**가 기준이다. 파일마다 source device, 시간 정렬, 1ns 미만 값 정책, 용량을 고정할 수 있다. 예제의 CloudPhysics 경로는 아직 없는 원본을 가리키는 자리표시자다.
 
 팀에는 다음을 함께 공유한다.

@@ -1,0 +1,102 @@
+{
+  "profile_id": "review-256gib-op7-v1",
+  "status": "draft_for_user_review",
+  "checked_date": "2026-09-12",
+  "performed": [
+    "existing batch loader with conversion stubbed out",
+    "exact capacity arithmetic compared with double arithmetic",
+    "five complete source SHA-256 checks against prior manifests",
+    "input/output path checks",
+    "capacity comparison using prior full-file scans"
+  ],
+  "not_performed": [
+    "new full trace conversion",
+    "MQSim simulation",
+    "final workload representativeness validation"
+  ],
+  "summary": {
+    "capacity_fits": 3,
+    "capacity_exceeded": 2,
+    "missing_input": 1
+  },
+  "jobs": [
+    {
+      "job": 1,
+      "format": "rocksdb-overwritezipf",
+      "input": "../../../../Trace/256GB Trace/rocksdb_overwritezipf_200000000_500000x8.csv",
+      "status": "capacity_exceeded",
+      "capacity_bytes": 255636439040,
+      "required_capacity_bytes": 274853789696,
+      "excess_bytes": 19217350656,
+      "requests_from_prior_validation": 600044,
+      "read_bytes_from_prior_validation": 37957971968,
+      "write_bytes_from_prior_validation": 38202007552,
+      "source_sha256_checked_now": true,
+      "evidence_manifest": "../../validation/rocksdb-overwritezipf.trace.manifest.json"
+    },
+    {
+      "job": 2,
+      "format": "rocksdb-ycsba",
+      "input": "../../../../Trace/256GB Trace/rocksdb_ycsb-a_200000000_500000x8.csv",
+      "status": "capacity_exceeded",
+      "capacity_bytes": 255636439040,
+      "required_capacity_bytes": 274878955520,
+      "excess_bytes": 19242516480,
+      "requests_from_prior_validation": 11097297,
+      "read_bytes_from_prior_validation": 122234068992,
+      "write_bytes_from_prior_validation": 35852693504,
+      "source_sha256_checked_now": true,
+      "evidence_manifest": "../../validation/rocksdb-ycsba.trace.manifest.json"
+    },
+    {
+      "job": 3,
+      "format": "mobile",
+      "input": "../../../../Trace/256GB Trace/MobileBlockIOTraces-main/MobileBlockIOTraces-main/diablo_exec.csv.gz",
+      "status": "capacity_fits",
+      "capacity_bytes": 255636439040,
+      "required_capacity_bytes": 127774928896,
+      "excess_bytes": 0,
+      "requests_from_prior_validation": 337415,
+      "read_bytes_from_prior_validation": 6392000512,
+      "write_bytes_from_prior_validation": 1382891520,
+      "source_sha256_checked_now": true,
+      "evidence_manifest": "../../validation/mobile.trace.manifest.json"
+    },
+    {
+      "job": 4,
+      "format": "msrc1",
+      "input": "../../../../Trace/MSRC_1/CAMWEBDEV-lvm3.csv",
+      "status": "capacity_fits",
+      "capacity_bytes": 255636439040,
+      "required_capacity_bytes": 36417486336,
+      "excess_bytes": 0,
+      "requests_from_prior_validation": 682,
+      "read_bytes_from_prior_validation": 712704,
+      "write_bytes_from_prior_validation": 2990080,
+      "source_sha256_checked_now": true,
+      "evidence_manifest": "../../validation/msrc1.trace.manifest.json"
+    },
+    {
+      "job": 5,
+      "format": "msrc2",
+      "input": "../../../../Trace/MSRC_2/rsrch_1.csv",
+      "status": "capacity_fits",
+      "capacity_bytes": 255636439040,
+      "required_capacity_bytes": 191520501760,
+      "excess_bytes": 0,
+      "requests_from_prior_validation": 13780,
+      "read_bytes_from_prior_validation": 568320,
+      "write_bytes_from_prior_validation": 171211264,
+      "source_sha256_checked_now": true,
+      "evidence_manifest": "../../validation/msrc2.trace.manifest.json"
+    },
+    {
+      "job": 6,
+      "format": "cloudphysics-vscsi",
+      "input": "../../../../Trace/256GB Trace/cloudphysics/SELECT_ORIGINAL_TRACE.vscsitrace",
+      "status": "missing_input",
+      "capacity_bytes": 255636439040,
+      "reason": "전체 원본을 선택해야 함. 공개 파서 검증 샘플로 대체하지 않음."
+    }
+  ]
+}

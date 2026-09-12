@@ -1,5 +1,15 @@
 # Project Handoff
 
+## 2026-09-12 공용 변환 설정 추천 초안 — 사용자 검토 대기
+
+- `tools/trace_converter/profiles/review-256gib-op7-v1/`: 실행용 batch JSON, 용량 계산 근거, 원본 해시 목록, 사전 확인 결과와 검토 안내를 작성했다. 변환기 1.0.0 코드 변경 없음.
+- 추천: NAND 데이터 256GiB, 물리 용량 대비 OP 7%, 단일 NVMe 흐름·전체 자원 사용. 기존 XML은 물리 512GiB이므로 채널당 칩 수 4→2를 제안한다. 흐름별 섹터 할당 기준 변환 검사 용량은 255,636,439,040B. 현재 SSD XML은 변경하지 않았다.
+- 주소 보존·초과 오류, Mobile/CloudPhysics 안정 정렬, Mobile만 subnanosecond=floor. 파일별 독립 변환과 장치 필터를 고정한다.
+- 확인: 기존 배치 로더로 6개 작업 구문·옵션 검증, 원본 5개 전체 SHA-256 재확인, 기존 전체 스캔과 용량 대조. 용량 범위 내 3개, RocksDB 초과 2개, CloudPhysics 원본 미확보 1개. 새 대량 변환·시뮬레이션은 실행하지 않았다.
+- 사용자 검토: NAND 구성·OP, RocksDB 주소 처리, 실제 Mobile/MSRC/CloudPhysics 입력 선택. MSRC 두 임시 입력은 쓰기량이 작으므로 GC/WL 실험 대표 파일로 확정하지 않았다. 초기 점유율·사전 채우기·GC/WL 정책은 추후 시뮬레이션 설정에서 결정한다.
+- 설정 공유 ZIP: `D:/D_Drive_Codex/MQsimExperiments/releases/MQSim-Shared-Settings-256GiB-OP7-review-v1.zip`. Obsidian 기록 요청 없음.
+
+
 ## 2026-09-12 공용 트레이스 변환기 1.0.0
 
 - 범위: Alibaba 제외. RocksDB overwritezipf/YCSB-A, Mobile, CloudPhysics 원본 VSCSI/CSV, MSRC_1/2를 원본 MQSim 5열 입력으로 변환한다. 구현·GUI·공용 배치 예제·안내는 `tools/trace_converter/`.

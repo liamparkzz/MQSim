@@ -1,0 +1,105 @@
+{
+  "profile_id": "review-256gib-op7-v1",
+  "status": "draft_for_user_review",
+  "scope": "converter_capacity_reference_not_a_simulator_config",
+  "base_repository_commit": "dabd0f1f1f7c1f2441b2d7f203dfaba72360e90b",
+  "converter_version": "1.0.0",
+  "converter_sha256": "9dc988d9646323f2a8e5d46582906e3be43420bf784056cca89a845295396b52",
+  "base_geometry": {
+    "Flash_Channel_Count": 8,
+    "Chip_No_Per_Channel": 4,
+    "Die_No_Per_Chip": 2,
+    "Plane_No_Per_Die": 2,
+    "Block_No_Per_Plane": 2048,
+    "Page_No_Per_Block": 256,
+    "Page_Capacity": 8192
+  },
+  "base_physical_data_bytes": 549755813888,
+  "proposed_geometry": {
+    "Flash_Channel_Count": 8,
+    "Chip_No_Per_Channel": 2,
+    "Die_No_Per_Chip": 2,
+    "Plane_No_Per_Die": 2,
+    "Block_No_Per_Plane": 2048,
+    "Page_No_Per_Block": 256,
+    "Page_Capacity": 8192
+  },
+  "physical_data_bytes": 274877906944,
+  "page_metadata_bytes_excluded_from_data_capacity": 448,
+  "overprovisioning_ratio_of_physical_capacity": "0.07",
+  "execution_assumption": "one_NVME_flow_per_independent_run_with_all_flash_resources",
+  "resource_ids": {
+    "channels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "chips_per_channel": [
+      0,
+      1
+    ],
+    "dies_per_chip": [
+      0,
+      1
+    ],
+    "planes_per_die": [
+      0,
+      1
+    ]
+  },
+  "plane_count": 64,
+  "sector_bytes": 512,
+  "physical_sectors_per_plane": 8388608,
+  "logical_sectors_per_plane": 7801405,
+  "logical_sector_count": 499289920,
+  "capacity_check_bytes": 255636439040,
+  "max_allowed_lba_inclusive": 499289919,
+  "formula": "plane_count * floor(blocks_per_plane * pages_per_block * sectors_per_page * (1 - OP)) * sector_bytes",
+  "rounding": "truncate fractional sectors within each plane before summing, matching Allocate_logical_address_for_flows for this single-flow allocation",
+  "boundary_policy": "check requests within [0, logical_sector_count); do not add one sector from inclusive end-address helper conventions",
+  "amu_global_page_count_reference": 31205621,
+  "amu_global_page_capacity_bytes_reference": 255636447232,
+  "capacity_source": "Logical_Address_Partitioning_Unit total_lha_no, not the separate global AMU page estimate",
+  "conversion_policy": {
+    "address_remapping": "none",
+    "out_of_capacity": "error",
+    "invalid_rows": "error",
+    "output_device": 0,
+    "sector_bytes": 512,
+    "time_unit": "nanosecond",
+    "time_origin": "first_selected_request_zero",
+    "request_repetition": 1,
+    "combine_input_files": false,
+    "split_or_merge_requests": false
+  },
+  "not_decided_by_this_profile": [
+    "GC/WL policy and thresholds",
+    "preconditioning and initial occupancy",
+    "final Mobile/MSRC workload selection",
+    "RocksDB address adaptation",
+    "CloudPhysics original file"
+  ],
+  "source_references": [
+    {
+      "path_from_repository_root": "ssdconfig.xml",
+      "sha256": "df0e66c582bad1885e55353fffc3af3f9c3a5b1e0f0c8161720e4bcc03d248c1"
+    },
+    {
+      "path_from_repository_root": "src/utils/Logical_Address_Partitioning_Unit.cpp",
+      "sha256": "cdfe09cbb874dfa7a7088735ca19b188acfb4c77664eb52092191f1530ce191a"
+    },
+    {
+      "path_from_repository_root": "src/ssd/Address_Mapping_Unit_Base.cpp",
+      "sha256": "6badb97112c1340c2130a686bcaafdded6e4c58388c37fc5ec1f93c2e252069a"
+    },
+    {
+      "path_from_repository_root": "src/exec/Host_System.cpp",
+      "sha256": "9666449e894f96f17657782f0d8b62c7323f798a8c23836dc2f62ee2ed10548e"
+    }
+  ]
+}

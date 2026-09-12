@@ -1,0 +1,55 @@
+{
+  "profile_id": "review-256gib-op7-v1",
+  "status": "draft_for_user_review",
+  "enforcement": "reference_only_converter_v1_does_not_read_this_file",
+  "inputs": [
+    {
+      "job": 1,
+      "format": "rocksdb-overwritezipf",
+      "input": "../../../../Trace/256GB Trace/rocksdb_overwritezipf_200000000_500000x8.csv",
+      "sha256": "32fd10259702df63956ece93d7f42e970d56ad12ed345451ab76d56dc066bc63",
+      "bytes": 16984205,
+      "selection_status": "provided_rocksdb_file"
+    },
+    {
+      "job": 2,
+      "format": "rocksdb-ycsba",
+      "input": "../../../../Trace/256GB Trace/rocksdb_ycsb-a_200000000_500000x8.csv",
+      "sha256": "60c115138700ff25644c7b063f6f2128664c088fc95a544cbd9caf623e3ea8dd",
+      "bytes": 306928488,
+      "selection_status": "provided_rocksdb_file"
+    },
+    {
+      "job": 3,
+      "format": "mobile",
+      "input": "../../../../Trace/256GB Trace/MobileBlockIOTraces-main/MobileBlockIOTraces-main/diablo_exec.csv.gz",
+      "sha256": "8922b0ecc1971e5f80f737e5e3a62516f1f603f1d0234149f8ea98adbe8f7908",
+      "bytes": 3018789,
+      "selection_status": "provisional_validation_input"
+    },
+    {
+      "job": 4,
+      "format": "msrc1",
+      "input": "../../../../Trace/MSRC_1/CAMWEBDEV-lvm3.csv",
+      "sha256": "0de29f7e5edaba098877a5f578d4d55387adbb177b0c557754cd9df0326c7b0d",
+      "bytes": 35650,
+      "selection_status": "provisional_validation_input"
+    },
+    {
+      "job": 5,
+      "format": "msrc2",
+      "input": "../../../../Trace/MSRC_2/rsrch_1.csv",
+      "sha256": "4310d76a35f27754d87d5e641e3e302b5c9df5a30384fe39966858b14e3f3187",
+      "bytes": 755814,
+      "selection_status": "provisional_validation_input"
+    },
+    {
+      "job": 6,
+      "format": "cloudphysics-vscsi",
+      "input": "../../../../Trace/256GB Trace/cloudphysics/SELECT_ORIGINAL_TRACE.vscsitrace",
+      "sha256": null,
+      "bytes": null,
+      "selection_status": "original_file_required"
+    }
+  ]
+}
