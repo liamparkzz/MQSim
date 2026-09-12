@@ -1,0 +1,76 @@
+{
+  "converter_sha256": "9dc988d9646323f2a8e5d46582906e3be43420bf784056cca89a845295396b52",
+  "converter_version": "1.0.0",
+  "excluded_by_device": {
+    "read_bytes": 0,
+    "reads": 0,
+    "requests": 0,
+    "write_bytes": 0,
+    "writes": 0
+  },
+  "format": "mobile",
+  "input": {
+    "read_bytes": 6392000512,
+    "reads": 295689,
+    "requests": 337415,
+    "write_bytes": 1382891520,
+    "writes": 41726
+  },
+  "options": {
+    "capacity_bytes": null,
+    "cloudphysics_length_unit": null,
+    "sort_time": true,
+    "source_device_filter": null,
+    "subnanosecond": "floor"
+  },
+  "output": {
+    "duration_ns": 5247399133737000,
+    "first_time_ns": 0,
+    "last_time_ns": 5247399133737000,
+    "max_lba_exclusive": 249560408,
+    "min_lba": 48,
+    "read_bytes": 6392000512,
+    "reads": 295689,
+    "requests": 337415,
+    "required_capacity_bytes": 127774928896,
+    "sha256": "828940958409fc7305a7814339c0eb4d024b5dd2a29f3b5087aaf85b5f15c5c9",
+    "write_bytes": 1382891520,
+    "writes": 41726
+  },
+  "schema_version": 1,
+  "selected": {
+    "read_bytes": 6392000512,
+    "reads": 295689,
+    "requests": 337415,
+    "write_bytes": 1382891520,
+    "writes": 41726
+  },
+  "source": {
+    "blank_rows": 0,
+    "bytes": 3018789,
+    "devices": {
+      "8388608": 337415
+    },
+    "header_rows": 1,
+    "name": "diablo_exec.csv.gz",
+    "sha256": "8922b0ecc1971e5f80f737e5e3a62516f1f603f1d0234149f8ea98adbe8f7908",
+    "subnanosecond_rows": 18733
+  },
+  "transformations": {
+    "address_remapping": "none",
+    "output_device": 0,
+    "read_code": 1,
+    "replay_count": 1,
+    "sector_bytes": 512,
+    "selected_source_device": "8388608",
+    "time_origin_ns": 5218127730127000,
+    "time_unit": "nanosecond",
+    "timestamp_reversals_in_source": 7,
+    "write_code": 0
+  },
+  "validation": {
+    "capacity": "not_checked",
+    "counts_and_bytes": "passed",
+    "independent_output_pass": "passed"
+  }
+}

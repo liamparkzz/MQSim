@@ -1,5 +1,15 @@
 # Project Handoff
 
+## 2026-09-12 공용 트레이스 변환기 1.0.0
+
+- 범위: Alibaba 제외. RocksDB overwritezipf/YCSB-A, Mobile, CloudPhysics 원본 VSCSI/CSV, MSRC_1/2를 원본 MQSim 5열 입력으로 변환한다. 구현·GUI·공용 배치 예제·안내는 `tools/trace_converter/`.
+- 검증: 자동 테스트 23개 및 GUI 다중 파일 처리 통과. 대표 파일 6개 전체 12,163,090개 요청의 변환과 출력 재검사 통과. CloudPhysics는 공개 원본 샘플이며 전체 데이터셋이 아니다. 세부 집계·해시는 `tools/trace_converter/VALIDATION.md`, `validation/`.
+- 정책: 512B 섹터, ns, 쓰기 0/읽기 1. 주소 보존, 단일 원본 디스크, 명시적 시간 정렬·1ns 미만 처리, SHA-256/집계 보고서. 기존 입력·출력을 덮어쓰지 않는다.
+- 남은 실험 조건: RocksDB 두 파일은 256GB 논리 주소 범위를 넘으며 YCSB-A는 256GiB도 1MiB 초과한다. CloudPhysics 전체 원본 확보 및 SSD 논리 용량·주소 정책 확정이 필요하다.
+- 데스크탑 검증 산출물: `D:/D_Drive_Codex/MQsimExperiments/trace-converter-dev/validation-final/`. 배포 ZIP: `D:/D_Drive_Codex/MQsimExperiments/releases/MQSim-Trace-Converter-v1.0.0.zip`.
+- 재개: 실행기는 `tools/trace_converter/Start-Converter.cmd`. 공용 설정은 `examples/batch.example.json`의 입력 경로와 옵션을 실험 조건에 맞춰 확정한다. 이번 작업에서 시뮬레이션은 실행하지 않았다. Obsidian 작성 요청이 없어 노트는 변경하지 않았다.
+
+
 ## 2026-09-10 001~004 후속 수정본 — 사용자 검증 대기
 
 - 사용자 요청: PR79 통합본을 기준으로 001~004 관련 문제만 수정하고 GitHub·Obsidian에 변경 내용을 정리. 동작 검증은 사용자가 설계하며 새 검증 코드·실험은 추가하지 않는다.

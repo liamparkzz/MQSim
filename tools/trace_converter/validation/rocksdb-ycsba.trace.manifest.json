@@ -1,0 +1,76 @@
+{
+  "converter_sha256": "9dc988d9646323f2a8e5d46582906e3be43420bf784056cca89a845295396b52",
+  "converter_version": "1.0.0",
+  "excluded_by_device": {
+    "read_bytes": 0,
+    "reads": 0,
+    "requests": 0,
+    "write_bytes": 0,
+    "writes": 0
+  },
+  "format": "rocksdb",
+  "input": {
+    "read_bytes": 122234068992,
+    "reads": 10816055,
+    "requests": 11097297,
+    "write_bytes": 35852693504,
+    "writes": 281242
+  },
+  "options": {
+    "capacity_bytes": null,
+    "cloudphysics_length_unit": null,
+    "sort_time": false,
+    "source_device_filter": null,
+    "subnanosecond": "error"
+  },
+  "output": {
+    "duration_ns": 77997811567000,
+    "first_time_ns": 0,
+    "last_time_ns": 77997811567000,
+    "max_lba_exclusive": 536872960,
+    "min_lba": 2064,
+    "read_bytes": 122234068992,
+    "reads": 10816055,
+    "requests": 11097297,
+    "required_capacity_bytes": 274878955520,
+    "sha256": "499cdef1c0ca5e5404d68f5663e30b2a9383d28831834fb39ae9540ad1b73c74",
+    "write_bytes": 35852693504,
+    "writes": 281242
+  },
+  "schema_version": 1,
+  "selected": {
+    "read_bytes": 122234068992,
+    "reads": 10816055,
+    "requests": 11097297,
+    "write_bytes": 35852693504,
+    "writes": 281242
+  },
+  "source": {
+    "blank_rows": 0,
+    "bytes": 306928488,
+    "devices": {
+      "0": 11097297
+    },
+    "header_rows": 0,
+    "name": "rocksdb_ycsb-a_200000000_500000x8.csv",
+    "sha256": "60c115138700ff25644c7b063f6f2128664c088fc95a544cbd9caf623e3ea8dd",
+    "subnanosecond_rows": 0
+  },
+  "transformations": {
+    "address_remapping": "none",
+    "output_device": 0,
+    "read_code": 1,
+    "replay_count": 1,
+    "sector_bytes": 512,
+    "selected_source_device": "0",
+    "time_origin_ns": 19428000,
+    "time_unit": "nanosecond",
+    "timestamp_reversals_in_source": 0,
+    "write_code": 0
+  },
+  "validation": {
+    "capacity": "not_checked",
+    "counts_and_bytes": "passed",
+    "independent_output_pass": "passed"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "converter_sha256": "9dc988d9646323f2a8e5d46582906e3be43420bf784056cca89a845295396b52",
+  "converter_version": "1.0.0",
+  "excluded_by_device": {
+    "read_bytes": 0,
+    "reads": 0,
+    "requests": 0,
+    "write_bytes": 0,
+    "writes": 0
+  },
+  "format": "msrc",
+  "input": {
+    "read_bytes": 568320,
+    "reads": 42,
+    "requests": 13780,
+    "write_bytes": 171211264,
+    "writes": 13738
+  },
+  "options": {
+    "capacity_bytes": null,
+    "cloudphysics_length_unit": null,
+    "sort_time": false,
+    "source_device_filter": null,
+    "subnanosecond": "error"
+  },
+  "output": {
+    "duration_ns": 576557644379100,
+    "first_time_ns": 0,
+    "last_time_ns": 576557644379100,
+    "max_lba_exclusive": 374063480,
+    "min_lba": 2376,
+    "read_bytes": 568320,
+    "reads": 42,
+    "requests": 13780,
+    "required_capacity_bytes": 191520501760,
+    "sha256": "1c26d44feb913e5800a73074dbd2959a7d29a944801d3ea4a4ba8943055fd361",
+    "write_bytes": 171211264,
+    "writes": 13738
+  },
+  "schema_version": 1,
+  "selected": {
+    "read_bytes": 568320,
+    "reads": 42,
+    "requests": 13780,
+    "write_bytes": 171211264,
+    "writes": 13738
+  },
+  "source": {
+    "blank_rows": 0,
+    "bytes": 755814,
+    "devices": {
+      "rsrch:1": 13780
+    },
+    "header_rows": 0,
+    "name": "rsrch_1.csv",
+    "sha256": "4310d76a35f27754d87d5e641e3e302b5c9df5a30384fe39966858b14e3f3187",
+    "subnanosecond_rows": 0
+  },
+  "transformations": {
+    "address_remapping": "none",
+    "output_device": 0,
+    "read_code": 1,
+    "replay_count": 1,
+    "sector_bytes": 512,
+    "selected_source_device": "rsrch:1",
+    "time_origin_ns": 12816648107523227500,
+    "time_unit": "nanosecond",
+    "timestamp_reversals_in_source": 0,
+    "write_code": 0
+  },
+  "validation": {
+    "capacity": "not_checked",
+    "counts_and_bytes": "passed",
+    "independent_output_pass": "passed"
+  }
+}

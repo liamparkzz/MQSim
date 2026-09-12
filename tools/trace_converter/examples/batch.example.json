@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "format": "rocksdb-overwritezipf",
+      "input": "../../../Trace/256GB Trace/rocksdb_overwritezipf_200000000_500000x8.csv",
+      "output": "../../../Trace/converted-v1/rocksdb-overwritezipf.trace"
+    },
+    {
+      "format": "rocksdb-ycsba",
+      "input": "../../../Trace/256GB Trace/rocksdb_ycsb-a_200000000_500000x8.csv",
+      "output": "../../../Trace/converted-v1/rocksdb-ycsba.trace"
+    },
+    {
+      "format": "mobile",
+      "input": "../../../Trace/256GB Trace/MobileBlockIOTraces-main/MobileBlockIOTraces-main/diablo_exec.csv.gz",
+      "output": "../../../Trace/converted-v1/mobile-diablo-exec.trace",
+      "sort_time": true,
+      "subnanosecond": "floor"
+    },
+    {
+      "format": "msrc1",
+      "input": "../../../Trace/MSRC_1/CAMWEBDEV-lvm3.csv",
+      "output": "../../../Trace/converted-v1/msrc1.trace"
+    },
+    {
+      "format": "msrc2",
+      "input": "../../../Trace/MSRC_2/rsrch_1.csv",
+      "output": "../../../Trace/converted-v1/msrc2.trace"
+    },
+    {
+      "format": "cloudphysics-vscsi",
+      "input": "../../../Trace/256GB Trace/cloudphysics/SELECT_ORIGINAL_TRACE.vscsitrace",
+      "output": "../../../Trace/converted-v1/cloudphysics.trace",
+      "sort_time": true
+    }
+  ]
+}

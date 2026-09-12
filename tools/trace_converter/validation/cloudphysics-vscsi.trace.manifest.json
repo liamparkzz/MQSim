@@ -1,0 +1,77 @@
+{
+  "converter_sha256": "9dc988d9646323f2a8e5d46582906e3be43420bf784056cca89a845295396b52",
+  "converter_version": "1.0.0",
+  "excluded_by_device": {
+    "read_bytes": 0,
+    "reads": 0,
+    "requests": 0,
+    "write_bytes": 0,
+    "writes": 0
+  },
+  "format": "cloudphysics-vscsi",
+  "input": {
+    "read_bytes": 1797412352,
+    "reads": 46974,
+    "requests": 113872,
+    "write_bytes": 2408565760,
+    "writes": 66898
+  },
+  "options": {
+    "capacity_bytes": null,
+    "cloudphysics_length_unit": null,
+    "sort_time": true,
+    "source_device_filter": null,
+    "subnanosecond": "error"
+  },
+  "output": {
+    "duration_ns": 7200089885000,
+    "first_time_ns": 0,
+    "last_time_ns": 7200089885000,
+    "max_lba_exclusive": 65595583,
+    "min_lba": 15943,
+    "read_bytes": 1797412352,
+    "reads": 46974,
+    "requests": 113872,
+    "required_capacity_bytes": 33584938496,
+    "sha256": "1fa8bb252fc09ea038b674ba8eb98f67a462f619536182f805456c048fa70e0e",
+    "write_bytes": 2408565760,
+    "writes": 66898
+  },
+  "schema_version": 1,
+  "selected": {
+    "read_bytes": 1797412352,
+    "reads": 46974,
+    "requests": 113872,
+    "write_bytes": 2408565760,
+    "writes": 66898
+  },
+  "source": {
+    "blank_rows": 0,
+    "bytes": 3643904,
+    "devices": {
+      "0": 113872
+    },
+    "header_rows": 0,
+    "name": "cloudPhysicsIO.vscsi",
+    "sha256": "3e67d66a07e9292bb47f6c765eb24ab3ea3f1f7de7d64a1b9e8c28b38b7439b9",
+    "subnanosecond_rows": 0,
+    "vscsi_version": 1
+  },
+  "transformations": {
+    "address_remapping": "none",
+    "output_device": 0,
+    "read_code": 1,
+    "replay_count": 1,
+    "sector_bytes": 512,
+    "selected_source_device": "0",
+    "time_origin_ns": 5633898368802000,
+    "time_unit": "nanosecond",
+    "timestamp_reversals_in_source": 0,
+    "write_code": 0
+  },
+  "validation": {
+    "capacity": "not_checked",
+    "counts_and_bytes": "passed",
+    "independent_output_pass": "passed"
+  }
+}
